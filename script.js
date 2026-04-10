@@ -1,241 +1,246 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ─────────────────────────────────────────────
+// Jane Santos Brand Page — Interaction Engine
+// ─────────────────────────────────────────────
 
-    // ─────────────────────────────────────────────
-    // 01 · LANGUAGE TOGGLE (with localStorage)
-    // ─────────────────────────────────────────────
-    const langBtn = document.getElementById('lang-toggle');
-    const langOpts = langBtn.querySelectorAll('.lang-opt');
+(function () {
+    'use strict';
 
-    function setLang(lang) {
-        // Update the body data attribute (CSS uses this for display toggling)
-        document.body.setAttribute('data-lang', lang);
+    // ─── 01 · LANGUAGE TOGGLE ────────────────────────────────────────────────
+    try {
+        var langBtn = document.getElementById('lang-toggle');
+        var langOpts = langBtn ? langBtn.querySelectorAll('.lang-opt') : [];
 
-        // Update active state on buttons
-        langOpts.forEach(opt => {
-            opt.classList.toggle('active', opt.getAttribute('data-target') === lang);
-        });
+        function setLang(lang) {
+            document.body.setAttribute('data-lang', lang);
+            langOpts.forEach(function (opt) {
+                opt.classList.toggle('active', opt.getAttribute('data-target') === lang);
+            });
+            try { localStorage.setItem('janeLang', lang); } catch (e) { /* private browsing */ }
+        }
 
-        // Persist preference
-        localStorage.setItem('janeLang', lang);
+        // Apply saved preference (default: 'en')
+        var savedLang = 'en';
+        try { savedLang = localStorage.getItem('janeLang') || 'en'; } catch (e) {}
+        setLang(savedLang);
+
+        if (langBtn) {
+            langBtn.addEventListener('click', function (e) {
+                var opt = e.target.closest('.lang-opt');
+                if (!opt) return;
+                var targetLang = opt.getAttribute('data-target');
+                // Cross-fade
+                document.body.style.opacity = '0';
+                document.body.style.transition = 'opacity 200ms ease';
+                setTimeout(function () {
+                    setLang(targetLang);
+                    document.body.style.opacity = '1';
+                }, 200);
+            });
+        }
+    } catch (e) {
+        console.warn('[Jane] Language toggle error:', e);
+        // Ensure we at least set default lang so content is visible
+        try { document.body.setAttribute('data-lang', 'en'); } catch (_) {}
     }
 
-    // Apply saved preference on load (default to 'en')
-    const savedLang = localStorage.getItem('janeLang') || 'en';
-    setLang(savedLang);
-
-    langBtn.addEventListener('click', (e) => {
-        if (e.target.classList.contains('lang-opt')) {
-            const targetLang = e.target.getAttribute('data-target');
-            // Cross-fade: short opacity dip then back
-            document.body.style.transition = 'opacity 200ms ease';
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                setLang(targetLang);
-                document.body.style.opacity = '1';
-            }, 200);
-        }
-    });
-
-    // ─────────────────────────────────────────────
-    // 02 · SMOOTH SCROLL FOR NAV LINKS
-    // ─────────────────────────────────────────────
-    document.querySelectorAll('.nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href.startsWith('#')) {
-                e.preventDefault();
-                document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-            }
+    // ─── 02 · SMOOTH SCROLL ──────────────────────────────────────────────────
+    try {
+        document.querySelectorAll('.nav-links a[href^="#"]').forEach(function (anchor) {
+            anchor.addEventListener('click', function (e) {
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
-    });
+    } catch (e) { console.warn('[Jane] Smooth scroll error:', e); }
 
-    // ─────────────────────────────────────────────
-    // 03 · STAT COUNTER ANIMATION
-    // Ease-out easing: counts fast at start, slows to final value
-    // ─────────────────────────────────────────────
+    // ─── 03 · STAT COUNTERS ──────────────────────────────────────────────────
+    var statsDone = false;
+
     function easeOutQuart(t) {
         return 1 - Math.pow(1 - t, 4);
     }
 
     function animateCounter(el, target, duration) {
-        const start = performance.now();
-
-        function tick(now) {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = easeOutQuart(progress);
-            const current = Math.round(eased * target);
-            el.textContent = current;
-
+        var start = null;
+        function tick(timestamp) {
+            if (!start) start = timestamp;
+            var elapsed = timestamp - start;
+            var progress = Math.min(elapsed / duration, 1);
+            var value = Math.round(easeOutQuart(progress) * target);
+            el.textContent = value;
             if (progress < 1) {
                 requestAnimationFrame(tick);
             } else {
-                // Counter complete — show the + suffix and reveal label
                 el.textContent = target + '+';
-                const label = el.closest('.stat-item')?.querySelector('.stat-label');
-                if (label) label.classList.add('is-visible');
+                var label = el.closest('.stat-item');
+                if (label) {
+                    var statLabel = label.querySelector('.stat-label');
+                    if (statLabel) statLabel.classList.add('is-visible');
+                }
             }
         }
-
         requestAnimationFrame(tick);
     }
 
-    // Observe the stats section — fire counters once when it enters view
-    const statsSection = document.querySelector('.hero-stats');
-    let statsDone = false;
+    function runCounters() {
+        if (statsDone) return;
+        statsDone = true;
+        // Run counters on ALL stat numbers (both lang versions, harmless)
+        document.querySelectorAll('.stat-number[data-target]').forEach(function (el) {
+            var target = parseInt(el.getAttribute('data-target'), 10);
+            if (!isNaN(target)) animateCounter(el, target, 1800);
+        });
+    }
 
-    if (statsSection) {
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !statsDone) {
-                    statsDone = true;
-                    document.querySelectorAll('.stat-number[data-target]').forEach(el => {
-                        const target = parseInt(el.getAttribute('data-target'), 10);
-                        animateCounter(el, target, 1800);
+    try {
+        var statsEl = document.querySelector('.hero-stats');
+        if (statsEl) {
+            // Try IntersectionObserver first
+            if ('IntersectionObserver' in window) {
+                var statsObs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            runCounters();
+                            statsObs.disconnect();
+                        }
                     });
-                    statsObserver.disconnect();
-                }
-            });
-        }, { threshold: 0.4 });
-
-        statsObserver.observe(statsSection);
+                }, { threshold: 0.1 }); // Low threshold — fires as soon as 10% visible
+                statsObs.observe(statsEl);
+            }
+            // Fallback: also fire after 800ms regardless (catches already-visible case)
+            setTimeout(runCounters, 800);
+        }
+    } catch (e) {
+        console.warn('[Jane] Counter error:', e);
+        setTimeout(runCounters, 800); // Last resort fallback
     }
 
-    // ─────────────────────────────────────────────
-    // 04 · INTERSECTION OBSERVER — SHARED SETUP
-    // ─────────────────────────────────────────────
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+    // ─── 04 · SCROLL REVEALS ─────────────────────────────────────────────────
+    try {
+        if ('IntersectionObserver' in window) {
 
-    // 04-A · NOTEBOOK PAPER SCROLL REVEAL
-    document.querySelectorAll('.notebook-paper').forEach(el => revealObserver.observe(el));
+            // Notebook paper + credentials
+            var revealObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
 
-    // 04-B · CREDENTIALS LIST STAGGER
-    document.querySelectorAll('.credentials-list').forEach(el => revealObserver.observe(el));
-
-    // 04-C · MASK SWEEP CURTAIN REVEALS (section headlines)
-    // Slightly tighter threshold — trigger when 20% from bottom viewport
-    const headlineObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                headlineObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0, rootMargin: '0px 0px -20% 0px' });
-
-    document.querySelectorAll('.mask-sweep').forEach(el => headlineObserver.observe(el));
-
-    // ─────────────────────────────────────────────
-    // 05 · GOLD THREAD CURSOR
-    // Only visible when hovering dark sections
-    // Disabled on touch/mobile devices
-    // ─────────────────────────────────────────────
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!isTouchDevice && !prefersReducedMotion) {
-        const cursor = document.querySelector('.gold-thread-cursor');
-        const darkSections = ['#hero', '#coaching', '.awards-section'];
-
-        // Target position (follows mouse immediately)
-        let targetX = 0, targetY = 0;
-        // Lerped position (60ms delay effect)
-        let currentX = 0, currentY = 0;
-        let cursorVisible = false;
-        let rafId = null;
-
-        document.addEventListener('mousemove', (e) => {
-            targetX = e.clientX;
-            targetY = e.clientY;
-        });
-
-        // Check if cursor is over a dark section
-        function isOverDarkSection(x, y) {
-            const el = document.elementFromPoint(x, y);
-            if (!el) return false;
-            return el.closest('#hero') !== null ||
-                   el.closest('#coaching') !== null ||
-                   el.closest('.alt-bg') !== null;
-        }
-
-        function animateCursor() {
-            // Lerp factor — lower = more delay (smoother trail)
-            const lerpFactor = 0.08;
-            currentX += (targetX - currentX) * lerpFactor;
-            currentY += (targetY - currentY) * lerpFactor;
-
-            const overDark = isOverDarkSection(Math.round(currentX), Math.round(currentY));
-
-            if (overDark && !cursorVisible) {
-                cursor.style.opacity = '0.85';
-                cursorVisible = true;
-            } else if (!overDark && cursorVisible) {
-                cursor.style.opacity = '0';
-                cursorVisible = false;
-            }
-
-            cursor.style.transform = `translate(${currentX - 3}px, ${currentY - 3}px)`;
-            rafId = requestAnimationFrame(animateCursor);
-        }
-
-        animateCursor();
-    }
-
-    // ─────────────────────────────────────────────
-    // 06 · AUDIO PANEL SCAFFOLDING (ready for assets)
-    // When a panel has a valid src on its <audio>, play it on hover
-    // ─────────────────────────────────────────────
-    document.querySelectorAll('.panel').forEach(panel => {
-        const audio = panel.querySelector('.panel-audio');
-        if (!audio) return;
-
-        let fadeInterval = null;
-
-        function fadeIn(audio, duration) {
-            audio.volume = 0;
-            audio.play().catch(() => {
-                // Autoplay blocked — show fallback play button
-                panel.classList.add('show-play-fallback');
+            document.querySelectorAll('.notebook-paper, .credentials-list').forEach(function (el) {
+                revealObs.observe(el);
             });
-            const step = 1 / (duration / 50);
-            clearInterval(fadeInterval);
-            fadeInterval = setInterval(() => {
-                audio.volume = Math.min(1, audio.volume + step);
-                if (audio.volume >= 1) clearInterval(fadeInterval);
-            }, 50);
-        }
 
-        function fadeOut(audio, duration) {
-            const step = 1 / (duration / 50);
-            clearInterval(fadeInterval);
-            fadeInterval = setInterval(() => {
-                audio.volume = Math.max(0, audio.volume - step);
-                if (audio.volume <= 0) {
-                    audio.pause();
-                    audio.currentTime = 0;
-                    clearInterval(fadeInterval);
+            // Headline curtain sweeps (slightly earlier trigger)
+            var headlineObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        headlineObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });
+
+            document.querySelectorAll('.mask-sweep').forEach(function (el) {
+                headlineObs.observe(el);
+            });
+        } else {
+            // No IntersectionObserver — just show everything
+            document.querySelectorAll('.notebook-paper, .credentials-list, .mask-sweep')
+                .forEach(function (el) { el.classList.add('is-visible'); });
+        }
+    } catch (e) { console.warn('[Jane] Scroll reveal error:', e); }
+
+    // ─── 05 · GOLD THREAD CURSOR ─────────────────────────────────────────────
+    try {
+        var cursor = document.querySelector('.gold-thread-cursor');
+        var isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (cursor && !isTouch && !reducedMotion) {
+            var tx = 0, ty = 0;   // target (mouse position)
+            var cx = 0, cy = 0;   // current (lerped)
+            var cursorOn = false;
+
+            document.addEventListener('mousemove', function (e) {
+                tx = e.clientX;
+                ty = e.clientY;
+            });
+
+            function isOverDark(x, y) {
+                var el = document.elementFromPoint(x, y);
+                if (!el) return false;
+                return !!(el.closest('#hero') || el.closest('#coaching'));
+            }
+
+            function tickCursor() {
+                cx += (tx - cx) * 0.08;
+                cy += (ty - cy) * 0.08;
+
+                var dark = isOverDark(Math.round(cx), Math.round(cy));
+                if (dark !== cursorOn) {
+                    cursor.style.opacity = dark ? '0.85' : '0';
+                    cursorOn = dark;
                 }
-            }, 50);
+                cursor.style.transform = 'translate(' + (cx - 3) + 'px, ' + (cy - 3) + 'px)';
+                requestAnimationFrame(tickCursor);
+            }
+            tickCursor();
         }
+    } catch (e) { console.warn('[Jane] Cursor error:', e); }
 
-        panel.addEventListener('mouseenter', () => {
-            if (audio.src && audio.src !== window.location.href) {
-                fadeIn(audio, 400);
+    // ─── 06 · AUDIO SCAFFOLDING ──────────────────────────────────────────────
+    // Wired and ready — no-ops until src is set on .panel-audio elements
+    try {
+        document.querySelectorAll('.panel').forEach(function (panel) {
+            var audio = panel.querySelector('.panel-audio');
+            if (!audio) return;
+
+            var fadeTimer = null;
+
+            function fadeAudioIn(a, durationMs) {
+                a.volume = 0;
+                a.play().catch(function () {
+                    panel.classList.add('show-play-fallback');
+                });
+                var steps = durationMs / 50;
+                var step = 1 / steps;
+                clearInterval(fadeTimer);
+                fadeTimer = setInterval(function () {
+                    a.volume = Math.min(1, a.volume + step);
+                    if (a.volume >= 1) clearInterval(fadeTimer);
+                }, 50);
             }
-        });
 
-        panel.addEventListener('mouseleave', () => {
-            if (!audio.paused) {
-                fadeOut(audio, 600);
+            function fadeAudioOut(a, durationMs) {
+                var steps = durationMs / 50;
+                var step = 1 / steps;
+                clearInterval(fadeTimer);
+                fadeTimer = setInterval(function () {
+                    a.volume = Math.max(0, a.volume - step);
+                    if (a.volume <= 0) {
+                        a.pause();
+                        a.currentTime = 0;
+                        clearInterval(fadeTimer);
+                    }
+                }, 50);
             }
-        });
-    });
 
-});
+            panel.addEventListener('mouseenter', function () {
+                // Only play if a real src has been assigned
+                var src = audio.getAttribute('src');
+                if (src && src.length > 0) fadeAudioIn(audio, 400);
+            });
+
+            panel.addEventListener('mouseleave', function () {
+                if (!audio.paused) fadeAudioOut(audio, 600);
+            });
+        });
+    } catch (e) { console.warn('[Jane] Audio error:', e); }
+
+})();
