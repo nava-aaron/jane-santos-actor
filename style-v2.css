@@ -214,6 +214,9 @@ body[data-lang="es"] .lang-en { display: none !important; }
   height: 100%;
   object-fit: cover;
   object-position: center top;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
 }
 
 /* Sections Base */
