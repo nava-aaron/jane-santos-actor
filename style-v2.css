@@ -629,10 +629,14 @@ body[data-lang="es"] .lang-en { display: none !important; }
     font-weight: 300;
     font-size: 1.05rem;
     border-bottom: 1px solid rgba(0,0,0,0.05);
-    color: var(--charcoal);
+    color: var(--text-dark);
     opacity: 0;
     transform: translateY(10px);
-    transition: all 400ms ease-out;
+    transition: all 400ms ease-out, color 200ms ease, background-color 200ms ease;
+    cursor: default;
+}
+.credentials-list li:hover {
+    color: var(--gold);
 }
 .credentials-list.is-visible li {
     opacity: 1;
@@ -642,6 +646,8 @@ body[data-lang="es"] .lang-en { display: none !important; }
 .credentials-list.is-visible li:nth-child(2) { transition-delay: 240ms; }
 .credentials-list.is-visible li:nth-child(3) { transition-delay: 360ms; }
 .credentials-list.is-visible li:nth-child(4) { transition-delay: 480ms; }
+.credentials-list.is-visible li:nth-child(5) { transition-delay: 600ms; }
+.credentials-list.is-visible li:nth-child(6) { transition-delay: 720ms; }
 
 .credentials-list li:last-child {
     border-bottom: none;
@@ -664,6 +670,19 @@ body[data-lang="es"] .lang-en { display: none !important; }
     margin-left: -1rem;
     margin-right: -1rem;
     border-radius: 4px;
+}
+
+/* Notebook Waveform Icon */
+.notebook-waveform {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    opacity: 0.5;
+    transition: opacity 300ms ease;
+    cursor: pointer;
+}
+.notebook-paper:hover .notebook-waveform {
+    opacity: 1;
 }
 
 /* Global Animations Layer */
