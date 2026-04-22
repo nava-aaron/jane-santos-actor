@@ -367,8 +367,8 @@ body[data-lang="es"] .lang-en { display: none !important; }
 /* Overlay and Text inside Panels */
 .panel-overlay {
   position: absolute;
-  top: 66%; left: 0; right: 0; bottom: 0; /* Bottom third */
-  background: linear-gradient(to top, rgba(17,17,17,0.95) 0%, transparent 100%);
+  top: 40%; left: 0; right: 0; bottom: 0; /* Cover more area for legibility */
+  background: linear-gradient(to top, rgba(17,17,17,0.95) 0%, rgba(17,17,17,0.8) 40%, transparent 100%);
   opacity: 0;
   transition: opacity 250ms ease-in-out;
 }
@@ -434,17 +434,18 @@ body[data-lang="es"] .lang-en { display: none !important; }
 }
 
 .btn-panel-sample {
-    white-space: nowrap;
+  white-space: nowrap;
   display: inline-block;
   position: relative;
   z-index: 50;
   margin-top: 1.25rem;
   padding: 0.6rem 1.5rem;
-  background-color: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: var(--gold);
+  color: #111;
+  border: 1px solid var(--gold);
   font-family: var(--font-sans);
   font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   text-decoration: none;
@@ -453,9 +454,9 @@ body[data-lang="es"] .lang-en { display: none !important; }
 }
 
 .btn-panel-sample:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #fff;
+  color: #111;
+  border-color: #fff;
 }
 
 /* Text Sections (About, Coaching) */
@@ -570,7 +571,7 @@ body[data-lang="es"] .lang-en { display: none !important; }
     transform: translateY(0);
   }
   .panel-overlay {
-    opacity: 0.8; /* Slightly visible overlay for text legibility */
+    opacity: 1; /* Fully visible overlay for text legibility */
   }
 }
 
