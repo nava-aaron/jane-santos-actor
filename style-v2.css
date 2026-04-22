@@ -384,6 +384,7 @@ body[data-lang="es"] .lang-en { display: none !important; }
   padding-left: 5rem; /* space for the sound icon */
   color: #fff;
   opacity: 0;
+  z-index: 20;
   transform: translateY(20px);
   transition: transform 350ms ease-in-out, opacity 350ms ease-in-out;
 }
@@ -430,6 +431,31 @@ body[data-lang="es"] .lang-en { display: none !important; }
   font-size: 0.85rem;
   opacity: 0.8;
   margin-top: 1rem;
+}
+
+.btn-panel-sample {
+    white-space: nowrap;
+  display: inline-block;
+  position: relative;
+  z-index: 50;
+  margin-top: 1.25rem;
+  padding: 0.6rem 1.5rem;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  transition: all 300ms ease;
+  pointer-events: auto;
+}
+
+.btn-panel-sample:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Text Sections (About, Coaching) */
@@ -537,6 +563,15 @@ body[data-lang="es"] .lang-en { display: none !important; }
   .dynamic-accordion:hover .panel { filter: none; }
   .panel:hover { flex: 2; }
   .columns-2 { grid-template-columns: 1fr; gap: 2rem; }
+
+  /* Make panel content and overlay always visible on mobile */
+  .panel-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .panel-overlay {
+    opacity: 0.8; /* Slightly visible overlay for text legibility */
+  }
 }
 
 /* About Grid */
