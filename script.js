@@ -134,6 +134,53 @@
             }
         });
 
+        function submitBookingFallback(payload) {
+            return new Promise(function (resolve, reject) {
+                var iframeName = 'booking-submit-frame';
+                var iframe = document.querySelector('iframe[name="' + iframeName + '"]');
+                if (!iframe) {
+                    iframe = document.createElement('iframe');
+                    iframe.name = iframeName;
+                    iframe.hidden = true;
+                    document.body.appendChild(iframe);
+                }
+
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'https://formsubmit.co/santosmediagroup@yahoo.com';
+                form.target = iframeName;
+                form.hidden = true;
+
+                payload.forEach(function (value, key) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    form.appendChild(input);
+                });
+
+                var settled = false;
+                var timeout = window.setTimeout(function () {
+                    if (settled) return;
+                    settled = true;
+                    form.remove();
+                    reject(new Error('Form submission timed out'));
+                }, 8000);
+
+                iframe.addEventListener('load', function onLoad() {
+                    iframe.removeEventListener('load', onLoad);
+                    if (settled) return;
+                    settled = true;
+                    window.clearTimeout(timeout);
+                    form.remove();
+                    resolve();
+                });
+
+                document.body.appendChild(form);
+                form.submit();
+            });
+        }
+
         if (bookingForm) {
             bookingForm.addEventListener('submit', function (e) {
                 e.preventDefault();
@@ -148,6 +195,7 @@
                 payload.append('_subject', 'Booking inquiry for Jane Santos');
                 payload.append('_template', 'table');
                 payload.append('_captcha', 'false');
+                payload.append('_replyto', data.get('email') || '');
 
                 if (status) {
                     status.textContent = 'Sending...';
@@ -170,6 +218,14 @@
                     }
                 }).catch(function (err) {
                     console.warn('[Jane] Booking submit error:', err);
+                    return submitBookingFallback(payload).then(function () {
+                        bookingForm.reset();
+                        if (status) {
+                            status.textContent = 'Thank you. Your inquiry has been submitted.';
+                            status.classList.add('is-success');
+                        }
+                    });
+                }).catch(function () {
                     if (status) {
                         status.textContent = 'The form could not send yet. Please email santosmediagroup@yahoo.com.';
                         status.classList.add('is-error');
