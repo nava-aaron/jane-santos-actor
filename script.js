@@ -611,7 +611,8 @@
             var videoBtn = panel.querySelector('.video-toggle');
             var videoContainer = panel.querySelector('.panel-video-container');
             if (videoBtn && videoContainer) {
-                var videoHoverEnabled = !window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+                var videoHoverEnabled = videoBtn.getAttribute('data-hover-play') !== 'false' &&
+                    !window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
                 function openVideo() {
                     var isPlaying = videoBtn.classList.contains('is-playing');
