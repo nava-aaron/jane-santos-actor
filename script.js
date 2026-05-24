@@ -117,11 +117,7 @@
         }
 
         document.querySelectorAll('[data-book-trigger]').forEach(function (trigger) {
-            trigger.setAttribute('href', '#book-jane');
-            trigger.addEventListener('click', function (e) {
-                e.preventDefault();
-                window.location.href = bookingMailto();
-            });
+            trigger.setAttribute('href', bookingMailto());
         });
     } catch (e) { console.warn('[Jane] Booking email error:', e); }
 
