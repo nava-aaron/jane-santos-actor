@@ -60,17 +60,36 @@
         updateNavState();
         window.addEventListener('scroll', updateNavState, { passive: true });
 
+        var menuToggle = document.querySelector('.menu-toggle');
+        function setMenuOpen(isOpen) {
+            if (!topNav || !menuToggle) return;
+            topNav.classList.toggle('menu-open', isOpen);
+            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function () {
+                setMenuOpen(!topNav.classList.contains('menu-open'));
+            });
+        }
+
         document.querySelectorAll('.nav-links a[href^="#"]').forEach(function (anchor) {
             anchor.addEventListener('click', function (e) {
                 var target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     e.preventDefault();
+                    setMenuOpen(false);
                     target.scrollIntoView({ behavior: 'smooth' });
                     if (history.pushState) {
                         history.pushState(null, '', this.getAttribute('href'));
                     }
                 }
             });
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setMenuOpen(false);
         });
     } catch (e) { console.warn('[Jane] Smooth scroll error:', e); }
 
