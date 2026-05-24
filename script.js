@@ -12,8 +12,14 @@
 
         function setLang(lang) {
             document.body.setAttribute('data-lang', lang);
+            document.documentElement.setAttribute('lang', lang);
             langOpts.forEach(function (opt) {
                 opt.classList.toggle('active', opt.getAttribute('data-target') === lang);
+            });
+            document.querySelectorAll('[data-en][data-es]').forEach(function (el) {
+                var text = el.getAttribute(lang === 'es' ? 'data-es' : 'data-en');
+                if (el.tagName === 'OPTION') el.textContent = text;
+                if (el.hasAttribute('placeholder')) el.setAttribute('placeholder', text);
             });
             try { localStorage.setItem('janeLang', lang); } catch (e) { /* private browsing */ }
         }
@@ -45,18 +51,183 @@
 
     // ─── 02 · SMOOTH SCROLL ──────────────────────────────────────────────────
     try {
+        var topNav = document.querySelector('.top-nav');
+        function updateNavState() {
+            if (!topNav) return;
+            topNav.classList.toggle('is-scrolled', window.scrollY > 12);
+        }
+
+        updateNavState();
+        window.addEventListener('scroll', updateNavState, { passive: true });
+
         document.querySelectorAll('.nav-links a[href^="#"]').forEach(function (anchor) {
             anchor.addEventListener('click', function (e) {
                 var target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     e.preventDefault();
                     target.scrollIntoView({ behavior: 'smooth' });
+                    if (history.pushState) {
+                        history.pushState(null, '', this.getAttribute('href'));
+                    }
                 }
             });
         });
     } catch (e) { console.warn('[Jane] Smooth scroll error:', e); }
 
-    // ─── 03 · STAT COUNTERS ──────────────────────────────────────────────────
+    // ─── 03 · BOOKING MODAL ─────────────────────────────────────────────────
+    try {
+        var bookingModal = document.getElementById('booking-modal');
+        var bookingDialog = bookingModal ? bookingModal.querySelector('.booking-dialog') : null;
+        var bookingForm = bookingModal ? bookingModal.querySelector('[data-booking-form]') : null;
+        var lastBookingTrigger = null;
+
+        function openBookingModal(trigger) {
+            if (!bookingModal || !bookingDialog) return;
+            lastBookingTrigger = trigger || document.activeElement;
+            bookingModal.hidden = false;
+            document.body.classList.add('modal-open');
+            setTimeout(function () { bookingDialog.focus(); }, 0);
+        }
+
+        function closeBookingModal() {
+            if (!bookingModal) return;
+            bookingModal.hidden = true;
+            document.body.classList.remove('modal-open');
+            if (lastBookingTrigger && typeof lastBookingTrigger.focus === 'function') {
+                lastBookingTrigger.focus();
+            }
+        }
+
+        document.querySelectorAll('[data-book-trigger]').forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                openBookingModal(trigger);
+            });
+        });
+
+        document.querySelectorAll('[data-book-close]').forEach(function (closer) {
+            closer.addEventListener('click', closeBookingModal);
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && bookingModal && !bookingModal.hidden) {
+                closeBookingModal();
+            }
+        });
+
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var data = new FormData(bookingForm);
+                var subject = 'Booking inquiry for Jane Santos';
+                var body = [
+                    'Name: ' + (data.get('name') || ''),
+                    'Email: ' + (data.get('email') || ''),
+                    'Project type: ' + (data.get('project') || ''),
+                    'Timeline: ' + (data.get('timeline') || ''),
+                    '',
+                    'Message:',
+                    data.get('message') || ''
+                ].join('\n');
+                window.location.href = 'mailto:santosmediagroup@yahoo.com?subject=' +
+                    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            });
+        }
+    } catch (e) { console.warn('[Jane] Booking modal error:', e); }
+
+    // ─── 04 · VOICE REEL PLAYER ──────────────────────────────────────────────
+    try {
+        var voicePlayer = document.querySelector('[data-audio-player]');
+        if (voicePlayer) {
+            var voiceAudio = voicePlayer.querySelector('audio');
+            var voicePlay = voicePlayer.querySelector('.voice-play');
+            var voiceProgress = voicePlayer.querySelector('.voice-progress');
+            var voiceProgressFill = voicePlayer.querySelector('.voice-progress-fill');
+            var voiceTime = voicePlayer.querySelector('.voice-time');
+
+            function formatTime(seconds) {
+                if (!isFinite(seconds) || seconds < 0) seconds = 0;
+                var mins = Math.floor(seconds / 60);
+                var secs = Math.floor(seconds % 60);
+                return mins + ':' + (secs < 10 ? '0' : '') + secs;
+            }
+
+            function updateVoiceProgress() {
+                var duration = voiceAudio.duration || 60;
+                var progress = duration ? (voiceAudio.currentTime / duration) * 100 : 0;
+                voiceProgressFill.style.width = Math.min(100, progress) + '%';
+                voiceTime.textContent = formatTime(voiceAudio.currentTime) + ' / ' + formatTime(duration);
+            }
+
+            function pausePanelMedia() {
+                document.querySelectorAll('.panel-audio').forEach(function (audio) {
+                    if (!audio.paused) {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    }
+                    var panel = audio.closest('.panel');
+                    if (panel) {
+                        panel.classList.remove('is-playing');
+                        var btn = panel.querySelector('.play-toggle');
+                        if (btn) {
+                            btn.textContent = 'Listen to Sample';
+                            btn.classList.remove('is-playing');
+                        }
+                    }
+                });
+                document.querySelectorAll('.video-toggle.is-playing').forEach(function (btn) {
+                    var panel = btn.closest('.panel');
+                    var container = panel ? panel.querySelector('.panel-video-container') : null;
+                    if (container) {
+                        container.innerHTML = '';
+                        container.style.opacity = '0';
+                        container.style.pointerEvents = 'none';
+                    }
+                    btn.textContent = btn.getAttribute('data-open-label') || 'Watch Trailer';
+                    btn.classList.remove('is-playing');
+                    if (panel) panel.classList.remove('is-playing');
+                });
+            }
+
+            voicePlay.addEventListener('click', function () {
+                if (voiceAudio.paused) {
+                    pausePanelMedia();
+                    voiceAudio.play().catch(function (err) {
+                        console.warn('[Jane] Voice reel playback failed:', err);
+                    });
+                } else {
+                    voiceAudio.pause();
+                }
+            });
+
+            voiceProgress.addEventListener('click', function (e) {
+                var rect = voiceProgress.getBoundingClientRect();
+                var ratio = (e.clientX - rect.left) / rect.width;
+                if (voiceAudio.duration) {
+                    voiceAudio.currentTime = Math.max(0, Math.min(1, ratio)) * voiceAudio.duration;
+                }
+            });
+
+            voiceAudio.addEventListener('play', function () {
+                voicePlayer.classList.add('is-playing');
+                voicePlay.setAttribute('aria-label', 'Pause voice-over reel');
+            });
+            voiceAudio.addEventListener('pause', function () {
+                voicePlayer.classList.remove('is-playing');
+                voicePlay.setAttribute('aria-label', 'Play voice-over reel');
+            });
+            voiceAudio.addEventListener('ended', function () {
+                voicePlayer.classList.remove('is-playing');
+                voiceAudio.currentTime = 0;
+                updateVoiceProgress();
+            });
+            voiceAudio.addEventListener('loadedmetadata', updateVoiceProgress);
+            voiceAudio.addEventListener('timeupdate', updateVoiceProgress);
+            updateVoiceProgress();
+        }
+    } catch (e) { console.warn('[Jane] Voice reel error:', e); }
+
+    // ─── 05 · STAT COUNTERS ──────────────────────────────────────────────────
     var statsDone = false;
 
     function easeOutQuart(t) {
@@ -118,11 +289,11 @@
         setTimeout(runCounters, 800); // Last resort fallback
     }
 
-    // ─── 04 · SCROLL REVEALS ─────────────────────────────────────────────────
+    // ─── 06 · SCROLL REVEALS ─────────────────────────────────────────────────
     try {
         if ('IntersectionObserver' in window) {
 
-            // Notebook paper + credentials
+            // About story + credentials
             var revealObs = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (entry.isIntersecting) {
@@ -132,7 +303,7 @@
                 });
             }, { threshold: 0.15 });
 
-            document.querySelectorAll('.notebook-paper, .credentials-list').forEach(function (el) {
+            document.querySelectorAll('.about-story, .credentials-list').forEach(function (el) {
                 revealObs.observe(el);
             });
 
@@ -151,12 +322,12 @@
             });
         } else {
             // No IntersectionObserver — just show everything
-            document.querySelectorAll('.notebook-paper, .credentials-list, .mask-sweep')
+            document.querySelectorAll('.about-story, .credentials-list, .mask-sweep')
                 .forEach(function (el) { el.classList.add('is-visible'); });
         }
     } catch (e) { console.warn('[Jane] Scroll reveal error:', e); }
 
-    // ─── 05 · GOLD THREAD CURSOR ─────────────────────────────────────────────
+    // ─── 07 · GOLD THREAD CURSOR ─────────────────────────────────────────────
     try {
         var cursor = document.querySelector('.gold-thread-cursor');
         var isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -194,52 +365,179 @@
         }
     } catch (e) { console.warn('[Jane] Cursor error:', e); }
 
-    // ─── 06 · AUDIO SCAFFOLDING ──────────────────────────────────────────────
+    // ─── 07 · MEDIA SCAFFOLDING ──────────────────────────────────────────────
     // Wired and ready — no-ops until src is set on .panel-audio elements
     try {
         document.querySelectorAll('.panel').forEach(function (panel) {
             var audio = panel.querySelector('.panel-audio');
-            if (!audio) return;
-
             var fadeTimer = null;
 
-            function fadeAudioIn(a, durationMs) {
-                a.volume = 0;
-                a.play().catch(function () {
-                    panel.classList.add('show-play-fallback');
+            if (audio) {
+                function fadeAudioIn(a, durationMs) {
+                    a.volume = 0;
+                    a.play().catch(function () {
+                        panel.classList.add('show-play-fallback');
+                    });
+                    var steps = durationMs / 50;
+                    var step = 1 / steps;
+                    clearInterval(fadeTimer);
+                    fadeTimer = setInterval(function () {
+                        a.volume = Math.min(1, a.volume + step);
+                        if (a.volume >= 1) clearInterval(fadeTimer);
+                    }, 50);
+                }
+
+                function fadeAudioOut(a, durationMs) {
+                    var steps = durationMs / 50;
+                    var step = 1 / steps;
+                    clearInterval(fadeTimer);
+                    fadeTimer = setInterval(function () {
+                        a.volume = Math.max(0, a.volume - step);
+                        if (a.volume <= 0) {
+                            a.pause();
+                            a.currentTime = 0;
+                            clearInterval(fadeTimer);
+                        }
+                    }, 50);
+                }
+
+                var playBtn = panel.querySelector('.play-toggle');
+
+                panel.addEventListener('mouseenter', function () {
+                    if (playBtn) return; // Disable hover play if there's a manual button
+                    var src = audio.getAttribute('src');
+                    if (src && src.length > 0) fadeAudioIn(audio, 400);
                 });
-                var steps = durationMs / 50;
-                var step = 1 / steps;
-                clearInterval(fadeTimer);
-                fadeTimer = setInterval(function () {
-                    a.volume = Math.min(1, a.volume + step);
-                    if (a.volume >= 1) clearInterval(fadeTimer);
-                }, 50);
+
+                panel.addEventListener('mouseleave', function () {
+                    if (playBtn) return; // Disable hover pause if there's a manual button
+                    if (!audio.paused) fadeAudioOut(audio, 600);
+                });
+
+                // Manual play/pause via button
+                if (playBtn) {
+                    playBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (audio && audio.paused) {
+                            // Pause all other audio on the page
+                            document.querySelectorAll('.panel-audio').forEach(function(otherAudio) {
+                                if (otherAudio !== audio && !otherAudio.paused) {
+                                    var stepsOther = 400 / 50;
+                                    var stepOther = 1 / stepsOther;
+                                    var otherFadeTimer = setInterval(function () {
+                                        otherAudio.volume = Math.max(0, otherAudio.volume - stepOther);
+                                        if (otherAudio.volume <= 0) {
+                                            otherAudio.pause();
+                                            otherAudio.currentTime = 0;
+                                            clearInterval(otherFadeTimer);
+                                        }
+                                    }, 50);
+
+                                    var otherPanel = otherAudio.closest('.panel');
+                                    if (otherPanel) {
+                                        otherPanel.classList.remove('is-playing');
+                                        var otherBtn = otherPanel.querySelector('.play-toggle');
+                                        if (otherBtn) {
+                                            otherBtn.textContent = 'Listen to Sample';
+                                            otherBtn.classList.remove('is-playing');
+                                        }
+                                    }
+                                }
+                            });
+                            
+                            audio.volume = 1;
+                            audio.play().catch(function(err) {
+                                console.warn('[Jane] Audio playback failed:', err);
+                            });
+                            playBtn.textContent = 'Pause Sample';
+                            playBtn.classList.add('is-playing');
+                            panel.classList.add('is-playing');
+                        } else if (audio) {
+                            fadeAudioOut(audio, 400);
+                            playBtn.textContent = 'Listen to Sample';
+                            playBtn.classList.remove('is-playing');
+                            panel.classList.remove('is-playing');
+                        }
+                    });
+                }
             }
 
-            function fadeAudioOut(a, durationMs) {
-                var steps = durationMs / 50;
-                var step = 1 / steps;
-                clearInterval(fadeTimer);
-                fadeTimer = setInterval(function () {
-                    a.volume = Math.max(0, a.volume - step);
-                    if (a.volume <= 0) {
-                        a.pause();
-                        a.currentTime = 0;
-                        clearInterval(fadeTimer);
+            // Film reels open on hover for desktop, with the button retained as a touch/click fallback.
+            var videoBtn = panel.querySelector('.video-toggle');
+            var videoContainer = panel.querySelector('.panel-video-container');
+            if (videoBtn && videoContainer) {
+                var videoHoverEnabled = !window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+                function openVideo() {
+                    var isPlaying = videoBtn.classList.contains('is-playing');
+                    if (!isPlaying) {
+                        // Pause any playing audio
+                        document.querySelectorAll('.panel-audio').forEach(function(otherAudio) {
+                            if (!otherAudio.paused) {
+                                var stepsOther = 400 / 50;
+                                var stepOther = 1 / stepsOther;
+                                var otherFadeTimer = setInterval(function () {
+                                    otherAudio.volume = Math.max(0, otherAudio.volume - stepOther);
+                                    if (otherAudio.volume <= 0) {
+                                        otherAudio.pause();
+                                        otherAudio.currentTime = 0;
+                                        clearInterval(otherFadeTimer);
+                                    }
+                                }, 50);
+
+                                var otherPanel = otherAudio.closest('.panel');
+                                if (otherPanel) {
+                                    otherPanel.classList.remove('is-playing');
+                                    var otherBtn = otherPanel.querySelector('.play-toggle');
+                                    if (otherBtn) {
+                                        otherBtn.textContent = 'Listen to Sample';
+                                        otherBtn.classList.remove('is-playing');
+                                    }
+                                }
+                            }
+                        });
+
+                        // Create video surface and play
+                        var ytId = videoBtn.getAttribute('data-youtube-id');
+                        var localVideoSrc = videoBtn.getAttribute('data-video-src');
+                        if (localVideoSrc) {
+                            videoContainer.innerHTML = '<video src="' + localVideoSrc + '" autoplay muted loop playsinline controls style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border:0;"></video>';
+                        } else if (ytId) {
+                            videoContainer.innerHTML = '<iframe src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&mute=1&controls=1&playsinline=1&rel=0" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="autoplay; fullscreen"></iframe>';
+                        }
+                        videoContainer.style.opacity = '1';
+                        videoContainer.style.pointerEvents = 'auto';
+
+                        videoBtn.textContent = videoBtn.getAttribute('data-close-label') || 'Close Trailer';
+                        videoBtn.classList.add('is-playing');
+                        panel.classList.add('is-playing');
                     }
-                }, 50);
+                }
+
+                function closeVideo() {
+                    if (!videoBtn.classList.contains('is-playing')) return;
+                    videoContainer.innerHTML = '';
+                    videoContainer.style.opacity = '0';
+                    videoContainer.style.pointerEvents = 'none';
+                    videoBtn.textContent = videoBtn.getAttribute('data-open-label') || 'Watch Trailer';
+                    videoBtn.classList.remove('is-playing');
+                    panel.classList.remove('is-playing');
+                }
+
+                if (videoHoverEnabled) {
+                    panel.addEventListener('mouseenter', openVideo);
+                    panel.addEventListener('mouseleave', closeVideo);
+                }
+
+                videoBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (videoBtn.classList.contains('is-playing')) {
+                        closeVideo();
+                    } else {
+                        openVideo();
+                    }
+                });
             }
-
-            panel.addEventListener('mouseenter', function () {
-                // Only play if a real src has been assigned
-                var src = audio.getAttribute('src');
-                if (src && src.length > 0) fadeAudioIn(audio, 400);
-            });
-
-            panel.addEventListener('mouseleave', function () {
-                if (!audio.paused) fadeAudioOut(audio, 600);
-            });
         });
     } catch (e) { console.warn('[Jane] Audio error:', e); }
 
