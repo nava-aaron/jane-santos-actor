@@ -93,149 +93,37 @@
         });
     } catch (e) { console.warn('[Jane] Smooth scroll error:', e); }
 
-    // ─── 03 · BOOKING MODAL ─────────────────────────────────────────────────
+    // ─── 03 · BOOKING EMAIL ─────────────────────────────────────────────────
     try {
-        var bookingModal = document.getElementById('booking-modal');
-        var bookingDialog = bookingModal ? bookingModal.querySelector('.booking-dialog') : null;
-        var bookingForm = bookingModal ? bookingModal.querySelector('[data-booking-form]') : null;
-        var lastBookingTrigger = null;
+        function bookingMailto() {
+            var user = 'santosmediagroup';
+            var domain = 'gmail.com';
+            var subject = 'Booking inquiry for Jane Santos';
+            var body = [
+                'Hello Jane Santos team,',
+                '',
+                'I would like to inquire about booking Jane.',
+                '',
+                'Name:',
+                'Email:',
+                'Project details:',
+                '',
+                'Thank you.'
+            ].join('\n');
 
-        function openBookingModal(trigger) {
-            if (!bookingModal || !bookingDialog) return;
-            lastBookingTrigger = trigger || document.activeElement;
-            bookingModal.hidden = false;
-            document.body.classList.add('modal-open');
-            setTimeout(function () { bookingDialog.focus(); }, 0);
-        }
-
-        function closeBookingModal() {
-            if (!bookingModal) return;
-            bookingModal.hidden = true;
-            document.body.classList.remove('modal-open');
-            if (lastBookingTrigger && typeof lastBookingTrigger.focus === 'function') {
-                lastBookingTrigger.focus();
-            }
+            return 'mailto:' + user + '@' + domain +
+                '?subject=' + encodeURIComponent(subject) +
+                '&body=' + encodeURIComponent(body);
         }
 
         document.querySelectorAll('[data-book-trigger]').forEach(function (trigger) {
+            trigger.setAttribute('href', '#book-jane');
             trigger.addEventListener('click', function (e) {
                 e.preventDefault();
-                openBookingModal(trigger);
+                window.location.href = bookingMailto();
             });
         });
-
-        document.querySelectorAll('[data-book-close]').forEach(function (closer) {
-            closer.addEventListener('click', closeBookingModal);
-        });
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && bookingModal && !bookingModal.hidden) {
-                closeBookingModal();
-            }
-        });
-
-        function submitBookingFallback(payload) {
-            return new Promise(function (resolve, reject) {
-                var iframeName = 'booking-submit-frame';
-                var iframe = document.querySelector('iframe[name="' + iframeName + '"]');
-                if (!iframe) {
-                    iframe = document.createElement('iframe');
-                    iframe.name = iframeName;
-                    iframe.hidden = true;
-                    document.body.appendChild(iframe);
-                }
-
-                var form = document.createElement('form');
-                form.method = 'POST';
-                form.action = 'https://formsubmit.co/santosmediagroup@gmail.com';
-                form.target = iframeName;
-                form.hidden = true;
-
-                payload.forEach(function (value, key) {
-                    var input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = key;
-                    input.value = value;
-                    form.appendChild(input);
-                });
-
-                var settled = false;
-                var timeout = window.setTimeout(function () {
-                    if (settled) return;
-                    settled = true;
-                    form.remove();
-                    reject(new Error('Form submission timed out'));
-                }, 8000);
-
-                iframe.addEventListener('load', function onLoad() {
-                    iframe.removeEventListener('load', onLoad);
-                    if (settled) return;
-                    settled = true;
-                    window.clearTimeout(timeout);
-                    form.remove();
-                    resolve();
-                });
-
-                document.body.appendChild(form);
-                form.submit();
-            });
-        }
-
-        if (bookingForm) {
-            bookingForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                var data = new FormData(bookingForm);
-                var status = bookingForm.querySelector('[data-booking-status]');
-                var submit = bookingForm.querySelector('button[type="submit"]');
-                var payload = new FormData();
-
-                payload.append('name', data.get('name') || '');
-                payload.append('email', data.get('email') || '');
-                payload.append('message', data.get('message') || '');
-                payload.append('_subject', 'Booking inquiry for Jane Santos');
-                payload.append('_template', 'table');
-                payload.append('_captcha', 'false');
-                payload.append('_replyto', data.get('email') || '');
-
-                if (status) {
-                    status.textContent = 'Sending...';
-                    status.classList.remove('is-error', 'is-success');
-                }
-                if (submit) submit.disabled = true;
-
-                fetch('https://formsubmit.co/ajax/santosmediagroup@gmail.com', {
-                    method: 'POST',
-                    headers: { 'Accept': 'application/json' },
-                    body: payload
-                }).then(function (response) {
-                    if (!response.ok) throw new Error('Form service unavailable');
-                    return response.json();
-                }).then(function () {
-                    bookingForm.reset();
-                    if (status) {
-                        status.textContent = 'Thank you. Your inquiry has been sent.';
-                        status.classList.add('is-success');
-                    }
-                }).catch(function (err) {
-                    console.warn('[Jane] Booking submit error:', err);
-                    return submitBookingFallback(payload).then(function () {
-                        bookingForm.reset();
-                        if (status) {
-                            status.textContent = 'Thank you. Your inquiry has been submitted.';
-                            status.classList.add('is-success');
-                        }
-                    });
-                }).catch(function () {
-                    if (status) {
-                        status.textContent = 'The form could not send yet. Please email santosmediagroup@gmail.com.';
-                        status.classList.add('is-error');
-                    }
-                }).finally(function () {
-                    if (submit) submit.disabled = false;
-                });
-            });
-        }
-    } catch (e) { console.warn('[Jane] Booking modal error:', e); }
+    } catch (e) { console.warn('[Jane] Booking email error:', e); }
 
     // ─── 04 · VOICE REEL PLAYER ──────────────────────────────────────────────
     try {
