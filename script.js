@@ -647,7 +647,7 @@
                         var ytId = videoBtn.getAttribute('data-youtube-id');
                         var localVideoSrc = videoBtn.getAttribute('data-video-src');
                         if (localVideoSrc) {
-                            videoContainer.innerHTML = '<video src="' + localVideoSrc + '" autoplay muted loop playsinline controls style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border:0;"></video>';
+                            videoContainer.innerHTML = '<video src="' + localVideoSrc + '" autoplay loop playsinline controls style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; border:0;"></video>';
                         } else if (ytId) {
                             videoContainer.innerHTML = '<iframe src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&mute=1&controls=1&playsinline=1&rel=0" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="autoplay; fullscreen"></iframe>';
                         }
