@@ -147,7 +147,7 @@
 
                 var form = document.createElement('form');
                 form.method = 'POST';
-                form.action = 'https://formsubmit.co/santosmediagroup@yahoo.com';
+                form.action = 'https://formsubmit.co/santosmediagroup@gmail.com';
                 form.target = iframeName;
                 form.hidden = true;
 
@@ -203,7 +203,7 @@
                 }
                 if (submit) submit.disabled = true;
 
-                fetch('https://formsubmit.co/ajax/santosmediagroup@yahoo.com', {
+                fetch('https://formsubmit.co/ajax/santosmediagroup@gmail.com', {
                     method: 'POST',
                     headers: { 'Accept': 'application/json' },
                     body: payload
@@ -227,7 +227,7 @@
                     });
                 }).catch(function () {
                     if (status) {
-                        status.textContent = 'The form could not send yet. Please email santosmediagroup@yahoo.com.';
+                        status.textContent = 'The form could not send yet. Please email santosmediagroup@gmail.com.';
                         status.classList.add('is-error');
                     }
                 }).finally(function () {
