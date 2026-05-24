@@ -913,6 +913,28 @@ body.modal-open {
   cursor: pointer;
 }
 
+.booking-form .btn:disabled {
+  cursor: wait;
+  opacity: 0.64;
+}
+
+.booking-status {
+  min-height: 1.4rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.booking-status.is-success {
+  color: #2f6f4e;
+}
+
+.booking-status.is-error {
+  color: #9d2f2f;
+}
+
 .btn {
   display: inline-block;
   padding: 1.25rem 3rem;

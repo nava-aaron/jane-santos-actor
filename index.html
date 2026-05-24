@@ -26,7 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@200;300;400;500;600&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="preload" as="image" href="assets/jane-santos-hero.jpeg">
     
-    <link rel="stylesheet" href="style-v2.css?v=18">
+    <link rel="stylesheet" href="style-v2.css?v=19">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -213,7 +213,9 @@
                     <div class="panel-details">19 hrs 41 min · 4.8★</div>
                     <a href="#"
                        class="btn-panel-sample play-toggle"
-                       data-playing="false">
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
                       Listen to Sample
                     </a>
                 </div>
@@ -240,7 +242,9 @@
                     <div class="panel-details">9 hrs 7 min · 4.7★</div>
                     <a href="#"
                        class="btn-panel-sample play-toggle"
-                       data-playing="false">
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
                       Listen to Sample
                     </a>
                 </div>
@@ -267,7 +271,9 @@
                     <div class="panel-details">6 hrs 49 min · 4.5★</div>
                     <a href="#"
                        class="btn-panel-sample play-toggle"
-                       data-playing="false">
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
                       Listen to Sample
                     </a>
                 </div>
@@ -339,9 +345,10 @@
                 <div class="panel-bg" style="--rest-bg-size: auto 72%; --rest-bg-position: center center;"></div>
                 <div class="panel-overlay"></div>
                 <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
+                <audio class="panel-audio" src="assets/sisters-of-the-underground.mov" preload="none"></audio>
                 
                 <div class="sound-wave" aria-hidden="true">
+                    <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -351,6 +358,13 @@
                     <div class="panel-header">Podcast</div>
                     <h2 class="panel-title"><i>Sisters of the Underground</i></h2>
                     <div class="panel-details">Doña Chea Mirabal</div>
+                    <a href="#"
+                       class="btn-panel-sample play-toggle"
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
+                      Listen to Sample
+                    </a>
                 </div>
             </div>
         </div>
@@ -471,34 +485,16 @@
                     <span>Email</span>
                     <input type="email" name="email" autocomplete="email" required>
                 </label>
-                <label>
-                    <span class="lang-en">Project type</span>
-                    <span class="lang-es">Tipo de proyecto</span>
-                    <select name="project" required>
-                        <option value="" data-en="Select one" data-es="Selecciona una opcion">Select one</option>
-                        <option data-en="Commercial / Radio" data-es="Comercial / Radio">Commercial / Radio</option>
-                        <option data-en="Audiobook Narration" data-es="Narracion de audiolibro">Audiobook Narration</option>
-                        <option data-en="Film / TV / Game" data-es="Cine / TV / Videojuego">Film / TV / Game</option>
-                        <option data-en="Vocal Coaching" data-es="Coaching vocal">Vocal Coaching</option>
-                        <option data-en="Other" data-es="Otro">Other</option>
-                    </select>
-                </label>
-                <label>
-                    <span class="lang-en">Timeline</span>
-                    <span class="lang-es">Fecha o plazo</span>
-                    <input type="text" name="timeline" placeholder="Flexible, urgent, or target date" data-en="Flexible, urgent, or target date" data-es="Flexible, urgente o fecha ideal">
-                </label>
                 <label class="booking-message">
-                    <span class="lang-en">What should Jane know?</span>
-                    <span class="lang-es">Que debe saber Jane?</span>
+                    <span class="lang-en">Brief description</span>
+                    <span class="lang-es">Breve descripcion</span>
                     <textarea name="message" rows="5" required></textarea>
                 </label>
                 <button class="btn" type="submit">
                     <span class="lang-en">Send Inquiry</span>
                     <span class="lang-es">Enviar solicitud</span>
                 </button>
-                <p class="booking-note lang-en">This opens your email app so you can review before sending.</p>
-                <p class="booking-note lang-es">Esto abre tu correo para que puedas revisar antes de enviar.</p>
+                <p class="booking-status" data-booking-status role="status" aria-live="polite"></p>
             </form>
         </div>
     </div>

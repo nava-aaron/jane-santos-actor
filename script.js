@@ -119,18 +119,45 @@
             bookingForm.addEventListener('submit', function (e) {
                 e.preventDefault();
                 var data = new FormData(bookingForm);
-                var subject = 'Booking inquiry for Jane Santos';
-                var body = [
-                    'Name: ' + (data.get('name') || ''),
-                    'Email: ' + (data.get('email') || ''),
-                    'Project type: ' + (data.get('project') || ''),
-                    'Timeline: ' + (data.get('timeline') || ''),
-                    '',
-                    'Message:',
-                    data.get('message') || ''
-                ].join('\n');
-                window.location.href = 'mailto:santosmediagroup@yahoo.com?subject=' +
-                    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+                var status = bookingForm.querySelector('[data-booking-status]');
+                var submit = bookingForm.querySelector('button[type="submit"]');
+                var payload = new FormData();
+
+                payload.append('name', data.get('name') || '');
+                payload.append('email', data.get('email') || '');
+                payload.append('message', data.get('message') || '');
+                payload.append('_subject', 'Booking inquiry for Jane Santos');
+                payload.append('_template', 'table');
+                payload.append('_captcha', 'false');
+
+                if (status) {
+                    status.textContent = 'Sending...';
+                    status.classList.remove('is-error', 'is-success');
+                }
+                if (submit) submit.disabled = true;
+
+                fetch('https://formsubmit.co/ajax/santosmediagroup@yahoo.com', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: payload
+                }).then(function (response) {
+                    if (!response.ok) throw new Error('Form service unavailable');
+                    return response.json();
+                }).then(function () {
+                    bookingForm.reset();
+                    if (status) {
+                        status.textContent = 'Thank you. Your inquiry has been sent.';
+                        status.classList.add('is-success');
+                    }
+                }).catch(function (err) {
+                    console.warn('[Jane] Booking submit error:', err);
+                    if (status) {
+                        status.textContent = 'The form could not send yet. Please email santosmediagroup@yahoo.com.';
+                        status.classList.add('is-error');
+                    }
+                }).finally(function () {
+                    if (submit) submit.disabled = false;
+                });
             });
         }
     } catch (e) { console.warn('[Jane] Booking modal error:', e); }
@@ -170,8 +197,9 @@
                         panel.classList.remove('is-playing');
                         var btn = panel.querySelector('.play-toggle');
                         if (btn) {
-                            btn.textContent = 'Listen to Sample';
+                            btn.textContent = btn.getAttribute('data-play-label') || 'Listen to Sample';
                             btn.classList.remove('is-playing');
+                            btn.setAttribute('data-playing', 'false');
                         }
                     }
                 });
@@ -373,6 +401,30 @@
             var fadeTimer = null;
 
             if (audio) {
+                function playLabel(btn) {
+                    return btn ? (btn.getAttribute('data-play-label') || 'Listen to Sample') : 'Listen to Sample';
+                }
+
+                function pauseLabel(btn) {
+                    return btn ? (btn.getAttribute('data-pause-label') || 'Stop Sample') : 'Stop Sample';
+                }
+
+                function setAudioButton(btn, isPlaying) {
+                    if (!btn) return;
+                    btn.textContent = isPlaying ? pauseLabel(btn) : playLabel(btn);
+                    btn.classList.toggle('is-playing', isPlaying);
+                    btn.setAttribute('data-playing', isPlaying ? 'true' : 'false');
+                }
+
+                function stopAudioNow(a) {
+                    clearInterval(fadeTimer);
+                    a.pause();
+                    a.currentTime = 0;
+                    a.volume = 1;
+                    panel.classList.remove('is-playing');
+                    setAudioButton(playBtn, false);
+                }
+
                 function fadeAudioIn(a, durationMs) {
                     a.volume = 0;
                     a.play().catch(function () {
@@ -388,14 +440,17 @@
                 }
 
                 function fadeAudioOut(a, durationMs) {
+                    if (!durationMs) {
+                        stopAudioNow(a);
+                        return;
+                    }
                     var steps = durationMs / 50;
                     var step = 1 / steps;
                     clearInterval(fadeTimer);
                     fadeTimer = setInterval(function () {
                         a.volume = Math.max(0, a.volume - step);
                         if (a.volume <= 0) {
-                            a.pause();
-                            a.currentTime = 0;
+                            stopAudioNow(a);
                             clearInterval(fadeTimer);
                         }
                     }, 50);
@@ -418,46 +473,61 @@
                 if (playBtn) {
                     playBtn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        if (audio && audio.paused) {
-                            // Pause all other audio on the page
-                            document.querySelectorAll('.panel-audio').forEach(function(otherAudio) {
-                                if (otherAudio !== audio && !otherAudio.paused) {
-                                    var stepsOther = 400 / 50;
-                                    var stepOther = 1 / stepsOther;
-                                    var otherFadeTimer = setInterval(function () {
-                                        otherAudio.volume = Math.max(0, otherAudio.volume - stepOther);
-                                        if (otherAudio.volume <= 0) {
-                                            otherAudio.pause();
-                                            otherAudio.currentTime = 0;
-                                            clearInterval(otherFadeTimer);
-                                        }
-                                    }, 50);
+                        e.stopPropagation();
+                        if (!audio) return;
 
+                        if (!audio.paused || playBtn.classList.contains('is-playing')) {
+                            stopAudioNow(audio);
+                            return;
+                        }
+
+                        if (audio.paused) {
+                            var voiceAudio = document.querySelector('[data-audio-player] audio');
+                            if (voiceAudio && !voiceAudio.paused) voiceAudio.pause();
+
+                            document.querySelectorAll('.video-toggle.is-playing').forEach(function (btn) {
+                                var otherPanelVideo = btn.closest('.panel');
+                                var container = otherPanelVideo ? otherPanelVideo.querySelector('.panel-video-container') : null;
+                                if (container) {
+                                    container.innerHTML = '';
+                                    container.style.opacity = '0';
+                                    container.style.pointerEvents = 'none';
+                                }
+                                btn.textContent = btn.getAttribute('data-open-label') || 'Watch Trailer';
+                                btn.classList.remove('is-playing');
+                                if (otherPanelVideo) otherPanelVideo.classList.remove('is-playing');
+                            });
+
+                            document.querySelectorAll('.panel-audio').forEach(function(otherAudio) {
+                                if (otherAudio !== audio) {
+                                    otherAudio.pause();
+                                    otherAudio.currentTime = 0;
+                                    otherAudio.volume = 1;
                                     var otherPanel = otherAudio.closest('.panel');
                                     if (otherPanel) {
                                         otherPanel.classList.remove('is-playing');
                                         var otherBtn = otherPanel.querySelector('.play-toggle');
-                                        if (otherBtn) {
-                                            otherBtn.textContent = 'Listen to Sample';
-                                            otherBtn.classList.remove('is-playing');
-                                        }
+                                        setAudioButton(otherBtn, false);
                                     }
                                 }
                             });
                             
                             audio.volume = 1;
-                            audio.play().catch(function(err) {
-                                console.warn('[Jane] Audio playback failed:', err);
-                            });
-                            playBtn.textContent = 'Pause Sample';
-                            playBtn.classList.add('is-playing');
+                            setAudioButton(playBtn, true);
                             panel.classList.add('is-playing');
-                        } else if (audio) {
-                            fadeAudioOut(audio, 400);
-                            playBtn.textContent = 'Listen to Sample';
-                            playBtn.classList.remove('is-playing');
-                            panel.classList.remove('is-playing');
+                            audio.play().then(function () {
+                                setAudioButton(playBtn, true);
+                                panel.classList.add('is-playing');
+                            }).catch(function(err) {
+                                console.warn('[Jane] Audio playback failed:', err);
+                                setAudioButton(playBtn, false);
+                                panel.classList.remove('is-playing');
+                            });
                         }
+                    });
+
+                    audio.addEventListener('ended', function () {
+                        stopAudioNow(audio);
                     });
                 }
             }
@@ -490,8 +560,9 @@
                                     otherPanel.classList.remove('is-playing');
                                     var otherBtn = otherPanel.querySelector('.play-toggle');
                                     if (otherBtn) {
-                                        otherBtn.textContent = 'Listen to Sample';
+                                        otherBtn.textContent = otherBtn.getAttribute('data-play-label') || 'Listen to Sample';
                                         otherBtn.classList.remove('is-playing');
+                                        otherBtn.setAttribute('data-playing', 'false');
                                     }
                                 }
                             }
