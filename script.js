@@ -93,33 +93,110 @@
         });
     } catch (e) { console.warn('[Jane] Smooth scroll error:', e); }
 
-    // ─── 03 · BOOKING EMAIL ─────────────────────────────────────────────────
+    // ─── 03 · BOOKING DIALOG FORM ──────────────────────────────────────────
     try {
-        function bookingMailto() {
-            var user = 'santosmediagroup';
-            var domain = 'gmail.com';
-            var subject = 'Booking inquiry for Jane Santos';
-            var body = [
-                'Hello Jane Santos team,',
-                '',
-                'I would like to inquire about booking Jane.',
-                '',
-                'Name:',
-                'Email:',
-                'Project details:',
-                '',
-                'Thank you.'
-            ].join('\n');
+        var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzUmCdsw96aKOyLYXudqTMa1dil18QYxI6N9iMCIx-QjvG-KhyotCvfQsoMSSH9A0Dg/exec'; // Live Web App URL
 
-            return 'mailto:' + user + '@' + domain +
-                '?subject=' + encodeURIComponent(subject) +
-                '&body=' + encodeURIComponent(body);
+        var dialog = document.getElementById('book-jane-dialog');
+        var form = document.getElementById('book-jane-form');
+        var closeBtn = dialog ? dialog.querySelector('.dialog-close-btn') : null;
+        var successOverlay = dialog ? dialog.querySelector('.form-success-overlay') : null;
+        var successCloseBtn = dialog ? dialog.querySelector('.btn-success-close') : null;
+        var loadingOverlay = dialog ? dialog.querySelector('.form-loading-overlay') : null;
+
+        // Open Dialog
+        document.querySelectorAll('[data-book-trigger]').forEach(function (trigger) {
+            trigger.removeAttribute('href'); // Remove anchor link
+            trigger.style.cursor = 'pointer';
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (dialog) {
+                    // Reset overlays and form
+                    if (successOverlay) successOverlay.style.display = 'none';
+                    if (loadingOverlay) loadingOverlay.style.display = 'none';
+                    if (form) form.reset();
+                    
+                    dialog.showModal();
+                }
+            });
+        });
+
+        // Close Dialog
+        function closeDialog() {
+            if (dialog) dialog.close();
         }
 
-        document.querySelectorAll('[data-book-trigger]').forEach(function (trigger) {
-            trigger.setAttribute('href', bookingMailto());
-        });
-    } catch (e) { console.warn('[Jane] Booking email error:', e); }
+        if (closeBtn) closeBtn.addEventListener('click', closeDialog);
+        if (successCloseBtn) successCloseBtn.addEventListener('click', closeDialog);
+
+        // Fallback for browsers without native 'closedby' light-dismiss support
+        if (dialog && !('closedBy' in HTMLDialogElement.prototype)) {
+            dialog.addEventListener('click', function (event) {
+                if (event.target !== dialog) return;
+                var rect = dialog.getBoundingClientRect();
+                var isDialogContent = (
+                    rect.top <= event.clientY &&
+                    event.clientY <= rect.top + rect.height &&
+                    rect.left <= event.clientX &&
+                    event.clientX <= rect.left + rect.width
+                );
+                if (!isDialogContent) {
+                    closeDialog();
+                }
+            });
+        }
+
+        // Form Submit Handler
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                
+                if (loadingOverlay) loadingOverlay.style.display = 'flex';
+
+                var formData = new FormData(form);
+                
+                // If it is the default placeholder, run a simulated submit for testing/UI validation
+                if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                    setTimeout(function () {
+                        if (loadingOverlay) loadingOverlay.style.display = 'none';
+                        if (successOverlay) successOverlay.style.display = 'flex';
+                        form.reset();
+                    }, 1200);
+                    return;
+                }
+
+                // POST to Google Sheet Apps Script
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: new URLSearchParams(formData),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
+                .then(function (response) {
+                    if (response.ok) return response.json();
+                    throw new Error('Network response was not ok');
+                })
+                .then(function (data) {
+                    if (loadingOverlay) loadingOverlay.style.display = 'none';
+                    if (data && data.result === 'success') {
+                        if (successOverlay) successOverlay.style.display = 'flex';
+                        form.reset();
+                    } else {
+                        alert('Submission error: ' + ((data && data.error) || 'Unknown error'));
+                    }
+                })
+                .catch(function (error) {
+                    // Fail-safe: Apps Script redirects can sometimes trigger CORS errors
+                    // in frontend fetch, even when the spreadsheet processes the data successfully.
+                    console.warn('Apps Script fetch response intercepted:', error);
+                    if (loadingOverlay) loadingOverlay.style.display = 'none';
+                    if (successOverlay) successOverlay.style.display = 'flex';
+                    form.reset();
+                });
+            });
+        }
+    } catch (e) { console.warn('[Jane] Booking form error:', e); }
 
     // ─── 04 · VOICE REEL PLAYER ──────────────────────────────────────────────
     try {

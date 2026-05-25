@@ -490,6 +490,78 @@
         </div>
     </section>
 
+    <!-- Book Jane Contact Form Modal -->
+    <dialog id="book-jane-dialog" closedby="any" aria-labelledby="dialog-title-en">
+        <div class="dialog-content">
+            <button class="dialog-close-btn" aria-label="Close dialog" type="button">✕</button>
+            
+            <div class="dialog-form-wrapper">
+                <div class="lang-en">
+                    <h2 id="dialog-title-en" class="serif-title">Book Jane</h2>
+                    <p class="dialog-subtitle">Send a message directly to Jane's team.</p>
+                </div>
+                <div class="lang-es">
+                    <h2 id="dialog-title-es" class="serif-title">Reservar a Jane</h2>
+                    <p class="dialog-subtitle">Envía un mensaje directamente al equipo de Jane.</p>
+                </div>
+
+                <form id="book-jane-form">
+                    <div class="form-group">
+                        <label for="form-name" class="lang-en">Your Name</label>
+                        <label for="form-name" class="lang-es">Tu Nombre</label>
+                        <input type="text" id="form-name" name="name" required placeholder="Jane Doe" data-en="Jane Doe" data-es="Ingresa tu nombre">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-email" class="lang-en">Your Email</label>
+                        <label for="form-email" class="lang-es">Tu Correo Electrónico</label>
+                        <input type="email" id="form-email" name="email" required placeholder="jane@example.com" data-en="jane@example.com" data-es="correo@ejemplo.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-message" class="lang-en">Message</label>
+                        <label for="form-message" class="lang-es">Mensaje</label>
+                        <textarea id="form-message" name="message" rows="4" required placeholder="Tell us about your project..." data-en="Tell us about your project..." data-es="Cuéntanos sobre tu proyecto..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-submit">
+                        <span class="lang-en">Send Message</span>
+                        <span class="lang-es">Enviar Mensaje</span>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Success State Overlay -->
+            <div class="form-success-overlay" style="display: none;">
+                <div class="success-icon-wrapper">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                </div>
+                <div class="lang-en">
+                    <h3 class="serif-subtitle">Thank you!</h3>
+                    <p>Thank you for reaching out to our team. We'll get back to you.</p>
+                </div>
+                <div class="lang-es">
+                    <h3 class="serif-subtitle">¡Gracias!</h3>
+                    <p>Gracias por contactar a nuestro equipo. Nos comunicaremos contigo pronto.</p>
+                </div>
+                <button type="button" class="btn btn-success-close">
+                    <span class="lang-en">Close</span>
+                    <span class="lang-es">Cerrar</span>
+                </button>
+            </div>
+
+            <!-- Loading State Overlay -->
+            <div class="form-loading-overlay" style="display: none;">
+                <div class="spinner"></div>
+                <div class="lang-en">Sending your message...</div>
+                <div class="lang-es">Enviando tu mensaje...</div>
+            </div>
+        </div>
+    </dialog>
+
     <div class="gold-thread-cursor"></div>
 </body>
 </html>
