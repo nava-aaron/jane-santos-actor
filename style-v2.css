@@ -360,6 +360,13 @@ body[data-lang="es"] .lang-en { display: none !important; }
   width: 100%;
 }
 
+.work-section,
+#about,
+#coaching {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
 .alt-bg {
   background:
     linear-gradient(135deg, rgba(255,255,255,0.16), rgba(201,208,234,0.78)),

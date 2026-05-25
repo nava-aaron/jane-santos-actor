@@ -314,7 +314,36 @@
         }
     } catch (e) { console.warn('[Jane] Scroll reveal error:', e); }
 
-    // ─── 07 · GOLD THREAD CURSOR ─────────────────────────────────────────────
+    // ─── 07 · LAZY PANEL ART ────────────────────────────────────────────────
+    try {
+        var panelArt = document.querySelectorAll('.panel[data-panel-image]');
+
+        function loadPanelArt(panel) {
+            if (!panel || panel.hasAttribute('data-panel-loaded')) return;
+            var src = panel.getAttribute('data-panel-image');
+            if (!src) return;
+            panel.style.setProperty('--panel-image', 'url("' + src.replace(/"/g, '\\"') + '")');
+            panel.setAttribute('data-panel-loaded', 'true');
+        }
+
+        if ('IntersectionObserver' in window) {
+            var workSection = document.querySelector('#work');
+            var panelArtObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        panelArt.forEach(loadPanelArt);
+                        panelArtObs.disconnect();
+                    }
+                });
+            }, { rootMargin: '600px 0px' });
+
+            panelArtObs.observe(workSection || panelArt[0]);
+        } else {
+            panelArt.forEach(loadPanelArt);
+        }
+    } catch (e) { console.warn('[Jane] Panel art lazy-load error:', e); }
+
+    // ─── 08 · GOLD THREAD CURSOR ─────────────────────────────────────────────
     try {
         var cursor = document.querySelector('.gold-thread-cursor');
         var isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
@@ -352,7 +381,7 @@
         }
     } catch (e) { console.warn('[Jane] Cursor error:', e); }
 
-    // ─── 07 · MEDIA SCAFFOLDING ──────────────────────────────────────────────
+    // ─── 09 · MEDIA SCAFFOLDING ──────────────────────────────────────────────
     // Wired and ready — no-ops until src is set on .panel-audio elements
     try {
         document.querySelectorAll('.panel').forEach(function (panel) {

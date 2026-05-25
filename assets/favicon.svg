@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Jane Santos initials">
+  <rect width="64" height="64" rx="12" fill="#111111"/>
+  <path d="M12 50h40" stroke="#d4af37" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+  <text x="32" y="40" text-anchor="middle" fill="#f7f2e8" font-family="Cormorant Garamond, Georgia, serif" font-size="31" font-weight="600" letter-spacing="1">JS</text>
+</svg>
