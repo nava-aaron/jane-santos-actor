@@ -3,36 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jane Santos - Voice & Screen Artist</title>
+    <title>Jane Santos | Voiceover Artist, Actor, Director & Coach</title>
+    <meta name="description" content="Jane Santos is an award-winning Spanish-language voice-over artist, audiobook narrator, screen actor, and vocal coach for commercials, radio, narration, and performance.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Jane Santos">
+    <link rel="canonical" href="https://jane-santos.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Jane Santos">
+    <meta property="og:title" content="Jane Santos | Voiceover Artist, Actor, Director & Coach">
+    <meta property="og:description" content="Award-winning Spanish voice-over artist, audiobook narrator, screen actor, and vocal coach. Listen to Jane Santos' commercial voice reel and selected work.">
+    <meta property="og:url" content="https://jane-santos.com/">
+    <meta property="og:image" content="https://jane-santos.com/assets/jane-santos-hero.jpeg">
+    <meta property="og:image:alt" content="Jane Santos wearing headphones">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jane Santos | Voiceover Artist, Actor, Director & Coach">
+    <meta name="twitter:description" content="Listen to Jane Santos' Spanish commercial voice reel and selected audiobook, screen, and narration work.">
+    <meta name="twitter:image" content="https://jane-santos.com/assets/jane-santos-hero.jpeg">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@200;300;400;500;600&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/jane-santos-hero.jpeg">
     
-    <link rel="stylesheet" href="style-v2.css?v=4">
+    <link rel="stylesheet" href="style-v2.css?v=21">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jane Santos",
+      "jobTitle": "Spanish Voice-Over Artist, Audiobook Narrator and Screen Artist",
+      "url": "https://jane-santos.com/",
+      "image": "https://jane-santos.com/assets/jane-santos-hero.jpeg",
+      "knowsAbout": [
+        "Spanish voice-over",
+        "Audiobook narration",
+        "Commercial narration",
+        "Radio spots",
+        "Vocal coaching",
+        "Screen acting"
+      ]
+    }
+    </script>
 </head>
 <body data-lang="en">
     
     <!-- Top Navigation -->
-    <nav class="top-nav">
+    <nav class="top-nav" aria-label="Primary navigation">
         <div class="nav-brand">Jane Santos</div>
         <div class="nav-links lang-en">
             <a href="#hero">Home</a>
+            <a href="#voice-reel">Voice Reel</a>
             <a href="#work">Selected Work</a>
             <a href="#about">About Jane</a>
             <a href="#coaching">Consulting</a>
         </div>
         <div class="nav-links lang-es">
             <a href="#hero">Inicio</a>
+            <a href="#voice-reel">Reel de Voz</a>
             <a href="#work">Portafolio</a>
             <a href="#about">Sobre Jane</a>
             <a href="#coaching">Asesoría</a>
         </div>
         <div class="nav-controls">
-            <button id="lang-toggle" class="lang-toggle">
+            <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language">
                 <span class="lang-opt active" data-target="en">EN</span> | 
                 <span class="lang-opt" data-target="es">ES</span>
+            </button>
+            <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav-panel">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
         </div>
     </nav>
@@ -53,21 +94,25 @@
                     <div class="hero-stats">
                         <div class="stat-item">
                             <span class="stat-number" data-target="500">0</span>
-                            <span class="stat-label">Hours<br>Narrated</span>
+                            <span class="stat-label"><span class="stat-category">Voiceover</span><span class="stat-descriptor">Hours Narrated</span></span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-target="30">0</span>
-                            <span class="stat-label">Screen<br>Credits</span>
+                            <span class="stat-label"><span class="stat-category">Acting</span><span class="stat-descriptor">Screen Credits</span></span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-target="100">0</span>
-                            <span class="stat-label">Hours<br>Directed</span>
+                            <span class="stat-label"><span class="stat-category">Directing</span><span class="stat-descriptor">Hours Directed</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="50">0</span>
+                            <span class="stat-label"><span class="stat-category">Coaching</span><span class="stat-descriptor">Sessions</span></span>
                         </div>
                     </div>
 
                     <div class="hero-ctas">
                         <a href="#work" class="btn btn-primary">View Selected Work</a>
-                        <a href="#coaching" class="btn btn-secondary">Book Jane</a>
+                        <a href="#book-jane" class="btn btn-secondary" data-book-trigger>Book Jane</a>
                     </div>
                 </div>
 
@@ -83,27 +128,71 @@
                     <div class="hero-stats">
                         <div class="stat-item">
                             <span class="stat-number" data-target="500">0</span>
-                            <span class="stat-label">Horas<br>Narradas</span>
+                            <span class="stat-label"><span class="stat-category">Voiceover</span><span class="stat-descriptor">Horas Narradas</span></span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-target="30">0</span>
-                            <span class="stat-label">Créditos<br>en Pantalla</span>
+                            <span class="stat-label"><span class="stat-category">Actuación</span><span class="stat-descriptor">Créditos en Pantalla</span></span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-target="100">0</span>
-                            <span class="stat-label">Horas<br>Dirigidas</span>
+                            <span class="stat-label"><span class="stat-category">Dirección</span><span class="stat-descriptor">Horas Dirigidas</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="50">0</span>
+                            <span class="stat-label"><span class="stat-category">Coaching</span><span class="stat-descriptor">Sesiones</span></span>
                         </div>
                     </div>
 
                     <div class="hero-ctas">
                         <a href="#work" class="btn btn-primary">Ver Portafolio</a>
-                        <a href="#coaching" class="btn btn-secondary">Contactar a Jane</a>
+                        <a href="#book-jane" class="btn btn-secondary" data-book-trigger>Reservar a Jane</a>
                     </div>
                 </div>
             </div>
             
             <div class="hero-image-container">
-                <img src="assets/jane-santos-hero.jpeg" alt="Jane Santos - Voice and Screen Artist" class="hero-image">
+                <img src="assets/jane-santos-hero.jpeg" alt="Jane Santos wearing headphones, Spanish voice-over and screen artist" class="hero-image" width="1024" height="1535" fetchpriority="high" decoding="async">
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Reel Section -->
+    <section id="voice-reel" class="voice-reel-section">
+        <div class="voice-reel-inner">
+            <div class="voice-reel-copy">
+                <span class="eyebrow lang-en">Voice-Over Reel</span>
+                <span class="eyebrow lang-es">Reel de voz</span>
+                <h2 class="serif-title lang-en">Spanish commercial range, in one minute.</h2>
+                <h2 class="serif-title lang-es">Rango comercial, en un minuto.</h2>
+                <p class="serif-subtitle lang-en">Promos, radio spots, narration, and performance with precision and presence.</p>
+                <p class="serif-subtitle lang-es">Promociones, radio, narración y actuación con precisión y presencia.</p>
+            </div>
+
+            <div class="voice-player" data-audio-player>
+                <audio src="assets/jane-santos-audio-reel.mp3" preload="metadata"></audio>
+                <div class="voice-track">
+                    <div class="voice-player-topline">
+                        <span class="voice-player-title lang-en">Spanish Voice Reel</span>
+                        <span class="voice-player-title lang-es">Reel comercial</span>
+                        <span class="voice-time">0:00 / 1:00</span>
+                    </div>
+                    <div class="voice-waveform" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <button class="voice-progress" type="button" aria-label="Seek audio reel">
+                        <span class="voice-progress-fill"></span>
+                    </button>
+                    <div class="voice-player-cue lang-en">Click to listen with sound</div>
+                    <div class="voice-player-cue lang-es">Haz clic para escuchar</div>
+                </div>
+                <button class="voice-play" type="button" aria-label="Play voice-over reel">
+                    <span class="voice-play-icon" aria-hidden="true"></span>
+                    <span class="voice-play-text lang-en">Play reel</span>
+                    <span class="voice-play-text lang-es">Escuchar</span>
+                </button>
             </div>
         </div>
     </section>
@@ -117,13 +206,14 @@
 
         <div class="dynamic-accordion">
             <!-- Audiobook 1 -->
-            <div class="panel">
-                <div class="panel-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/0b/df/b5/0bdfb513-e9e0-ac59-3e3d-f0ccd21d7bb5/9780525633686.d.jpg/600x600bb.jpg');"></div>
+            <div class="panel" style="--panel-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/0b/df/b5/0bdfb513-e9e0-ac59-3e3d-f0ccd21d7bb5/9780525633686.d.jpg/600x600bb.jpg');">
+                <div class="panel-bg" style="--rest-bg-size: auto 72%; --rest-bg-position: center center;"></div>
                 <div class="panel-overlay"></div>
                 <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
+                <audio class="panel-audio" src="https://samples.audible.com/bk/rhsp/000895/bk_rhsp_000895_sample.mp3" preload="none"></audio>
                 
                 <div class="sound-wave" aria-hidden="true">
+                    <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -134,23 +224,25 @@
                     <h2 class="panel-title lang-en"><i>Becoming</i><br><small>Michelle Obama</small></h2>
                     <h2 class="panel-title lang-es"><i>Mi historia</i><br><small>Michelle Obama</small></h2>
                     <div class="panel-details">19 hrs 41 min · 4.8★</div>
-                    <a href="https://www.audible.com/webplayer?asin=8401022835&contentDeliveryType=Unknown&isSample=true&ref_=a_pd_jpp_cloudplayer_8401022835&overrideLph=false&initialCPLaunch=true"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="btn-panel-sample">
+                    <a href="#"
+                       class="btn-panel-sample play-toggle"
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
                       Listen to Sample
                     </a>
                 </div>
             </div>
 
             <!-- Audiobook 2 -->
-            <div class="panel">
-                <div class="panel-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2b/40/90/2b409067-0fdc-f627-1af9-bc7df44d1362/9780593677889.d.jpg/600x600bb.jpg');"></div>
+            <div class="panel" style="--panel-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2b/40/90/2b409067-0fdc-f627-1af9-bc7df44d1362/9780593677889.d.jpg/600x600bb.jpg');">
+                <div class="panel-bg" style="--rest-bg-size: auto 70%; --rest-bg-position: center center;"></div>
                 <div class="panel-overlay"></div>
                 <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
+                <audio class="panel-audio" src="https://samples.audible.com/bk/rhsp/004632/bk_rhsp_004632_sample.mp3" preload="none"></audio>
                 
                 <div class="sound-wave" aria-hidden="true">
+                    <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -161,23 +253,25 @@
                     <h2 class="panel-title lang-en"><i>The Light We Carry</i><br><small>Michelle Obama</small></h2>
                     <h2 class="panel-title lang-es"><i>Con luz propia</i><br><small>Michelle Obama</small></h2>
                     <div class="panel-details">9 hrs 7 min · 4.7★</div>
-                    <a href="https://www.audible.com/webplayer?asin=8401022835&contentDeliveryType=Unknown&isSample=true&ref_=a_pd_jpp_cloudplayer_8401022835&overrideLph=false&initialCPLaunch=true"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="btn-panel-sample">
+                    <a href="#"
+                       class="btn-panel-sample play-toggle"
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
                       Listen to Sample
                     </a>
                 </div>
             </div>
 
             <!-- Audiobook 3 -->
-            <div class="panel">
-                <div class="panel-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e6/66/d6/e666d6cf-d1d6-4897-8823-4c2f31def001/9780307941121.d.jpg/600x600bb.jpg');"></div>
+            <div class="panel" style="--panel-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/e6/66/d6/e666d6cf-d1d6-4897-8823-4c2f31def001/9780307941121.d.jpg/600x600bb.jpg');">
+                <div class="panel-bg" style="--rest-bg-size: auto 68%; --rest-bg-position: center center;"></div>
                 <div class="panel-overlay"></div>
                 <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
+                <audio class="panel-audio" src="https://samples.audible.com/bk/rhsp/005028/bk_rhsp_005028_sample.mp3" preload="none"></audio>
                 
                 <div class="sound-wave" aria-hidden="true">
+                    <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -188,81 +282,87 @@
                     <h2 class="panel-title lang-en"><i>The Bluest Eye</i><br><small>Toni Morrison</small></h2>
                     <h2 class="panel-title lang-es"><i>Ojos azules</i><br><small>Toni Morrison</small></h2>
                     <div class="panel-details">6 hrs 49 min · 4.5★</div>
+                    <a href="#"
+                       class="btn-panel-sample play-toggle"
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
+                      Listen to Sample
+                    </a>
                 </div>
             </div>
 
             <!-- Film 1 -->
-            <div class="panel">
-                <div class="panel-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/b/b7/A_State_of_Madness.jpg'); background-position: top center;"></div>
-                <div class="panel-overlay"></div>
-                <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
+            <div class="panel" style="--panel-image: url('assets/500 locos.jpeg');">
+                <div class="panel-bg" style="--rest-bg-size: auto 78%; --rest-bg-position: center center; --hover-bg-position: top center;"></div>
+                <div class="panel-video-container" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; opacity:0; pointer-events:none; transition: opacity 0.3s;"></div>
+                <div class="panel-overlay" style="z-index:2; pointer-events:none;"></div>
                 
-                <div class="sound-wave" aria-hidden="true">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-
-                <div class="panel-content">
+                <div class="panel-content" style="z-index:3;">
                     <div class="panel-header lang-en">Screen</div>
                     <div class="panel-header lang-es">Cine</div>
-                    <h2 class="panel-title"><i>A State of Madness</i></h2>
+                    <h2 class="panel-title lang-en"><i>A State of Madness</i></h2>
+                    <h2 class="panel-title lang-es"><i>Mis Quinientos Locos</i></h2>
                     <div class="panel-details lang-en">Soberano Award, Best Actress</div>
                     <div class="panel-details lang-es">Premio Soberano, Mejor Actriz</div>
+                    <a href="#"
+                       class="btn-panel-sample video-toggle"
+                       data-youtube-id="BOC--f-r7II">
+                      Watch Trailer
+                    </a>
                 </div>
             </div>
 
             <!-- Film 2: Refuge from the Storm -->
-            <div class="panel">
-                <div class="panel-bg" style="background-image: url('assets/refuge.png'); background-position: center;"></div>
-                <div class="panel-overlay"></div>
-                <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
+            <div class="panel" style="--panel-image: url('assets/refuge.png');">
+                <div class="panel-bg" style="--rest-bg-size: auto 78%; --rest-bg-position: center center;"></div>
+                <div class="panel-video-container" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; opacity:0; pointer-events:none; transition: opacity 0.3s;"></div>
+                <div class="panel-overlay" style="z-index:2; pointer-events:none;"></div>
                 
-                <div class="sound-wave" aria-hidden="true">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-
-                <div class="panel-content">
+                <div class="panel-content" style="z-index:3;">
                     <div class="panel-header lang-en">Screen</div>
                     <div class="panel-header lang-es">Cine</div>
                     <h2 class="panel-title"><i>Refuge from the Storm</i><br><small>w/ Michael Madsen</small></h2>
                     <div class="panel-details">Role: "Jane"</div>
+                    <a href="#"
+                       class="btn-panel-sample video-toggle"
+                       data-youtube-id="4SFRw1yV0ag">
+                      Watch Trailer
+                    </a>
                 </div>
             </div>
 
             <!-- Video Game -->
-            <div class="panel">
-                <div class="panel-bg" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/f/fa/Life_Is_Strange_2_cover.jpg');"></div>
-                <div class="panel-overlay"></div>
-                <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
-                
-                <div class="sound-wave" aria-hidden="true">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
+            <div class="panel" style="--panel-image: url('https://upload.wikimedia.org/wikipedia/en/f/fa/Life_Is_Strange_2_cover.jpg');">
+                <div class="panel-bg" style="--rest-bg-size: auto 72%; --rest-bg-position: center center;"></div>
+                <div class="panel-video-container" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; opacity:0; pointer-events:none; transition: opacity 0.3s;"></div>
+                <div class="panel-overlay" style="z-index:2; pointer-events:none;"></div>
 
-                <div class="panel-content">
+                <div class="panel-content" style="z-index:3;">
                     <div class="panel-header lang-en">Video Game</div>
                     <div class="panel-header lang-es">Videojuego</div>
                     <h2 class="panel-title"><i>Life is Strange 2</i></h2>
-                    <div class="panel-details">Maria Elena Flores</div>
+                    <div class="panel-details">Role: Maria Elena Flores</div>
+                    <a href="#"
+                       class="btn-panel-sample video-toggle"
+                       data-video-src="assets/life-is-strange-2.mp4"
+                       data-hover-play="false"
+                       data-open-label="Listen to Sample"
+                       data-close-label="Stop Sample">
+                      Listen to Sample
+                    </a>
                 </div>
             </div>
 
             <!-- Podcast -->
-            <div class="panel">
-                <div class="panel-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e0/ab/5c/e0ab5ca7-8d7a-8304-ebf0-bb3c14eb318d/mza_8688306347801756381.jpg/600x600bb.jpg');"></div>
+            <div class="panel" style="--panel-image: url('https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e0/ab/5c/e0ab5ca7-8d7a-8304-ebf0-bb3c14eb318d/mza_8688306347801756381.jpg/600x600bb.jpg');">
+                <div class="panel-bg" style="--rest-bg-size: auto 72%; --rest-bg-position: center center;"></div>
                 <div class="panel-overlay"></div>
                 <!-- Audio Scaffolding -->
-                <audio class="panel-audio" src="" preload="none"></audio>
+                <audio class="panel-audio" src="assets/sisters-of-the-underground.wav" preload="none"></audio>
                 
                 <div class="sound-wave" aria-hidden="true">
+                    <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -271,54 +371,51 @@
                 <div class="panel-content">
                     <div class="panel-header">Podcast</div>
                     <h2 class="panel-title"><i>Sisters of the Underground</i></h2>
-                    <div class="panel-details">Doña Chea Mirabal</div>
+                    <div class="panel-details">Role: Doña Chea Mirabal</div>
+                    <a href="#"
+                       class="btn-panel-sample play-toggle"
+                       data-playing="false"
+                       data-play-label="Listen to Sample"
+                       data-pause-label="Stop Sample">
+                      Listen to Sample
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="text-section">
-        <div class="text-container">
-            <h2 class="serif-title mask-sweep alt-bg-sweep lang-en">About Jane</h2>
-            <h2 class="serif-title mask-sweep alt-bg-sweep lang-es">Sobre Jane</h2>
+    <section id="about" class="text-section about-section">
+        <div class="text-container about-container">
+            <h2 class="serif-title about-title lang-en">About Jane</h2>
+            <h2 class="serif-title about-title lang-es">Sobre Jane</h2>
             
             <h3 class="serif-subtitle lang-en">A rare combination of <span class="gold-text">artistry and authority</span></h3>
             <h3 class="serif-subtitle lang-es">Una combinación única de <span class="gold-text">arte y autoridad</span></h3>
             
             <div class="about-grid">
-                <div class="notebook-paper lang-en">
-                    <div class="notebook-waveform" aria-label="Audio preview coming soon" title="Audio preview coming soon">
-                        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="8" width="3" height="4" rx="1.5" fill="#D4AF37"/>
-                            <rect x="5" y="4" width="3" height="12" rx="1.5" fill="#D4AF37"/>
-                            <rect x="10" y="0" width="3" height="20" rx="1.5" fill="#D4AF37"/>
-                            <rect x="15" y="4" width="3" height="12" rx="1.5" fill="#D4AF37"/>
-                            <rect x="20" y="7" width="3" height="6" rx="1.5" fill="#D4AF37"/>
-                            <rect x="25" y="9" width="3" height="2" rx="1" fill="#D4AF37"/>
-                        </svg>
+                <article class="about-story lang-en">
+                    <span class="about-kicker">In her own voice</span>
+                    <blockquote class="about-quote">Every story deserves to be fully felt.</blockquote>
+                    <div class="about-copy">
+                        <p>Jane Santos built her career on one principle: every story deserves to be fully felt. Across 100+ audiobooks and 500+ hours of recorded audio, that principle has never wavered.</p>
+                        <p>She is one of the most recognized voices in Spanish-language audiobooks, having brought to life works by Michelle Obama, Toni Morrison, Elizabeth Gilbert, Stephen King, and Junot Díaz. Her narration is not delivery. It is interpretation. The kind of performance that makes a listener forget they are listening at all.</p>
+                        <p>On screen, she earned the Soberano Award for Best Actress. Behind the glass, she has guided authors through hundreds of hours of professional audiobook production. What makes Jane rare is not range. It is credibility earned across every medium she has entered.</p>
                     </div>
-                    <p>Jane Santos built her career on one principle: every story deserves to be fully felt. Across more than 99 audiobooks and 500+ hours of recorded audio, that principle has never wavered.</p>
-                    <p>She is one of the most recognized voices in Spanish-language audiobooks, having brought to life works by Michelle Obama, Toni Morrison, Elizabeth Gilbert, Stephen King, and Junot Díaz. Her narration is not delivery. It is interpretation. The kind of performance that makes a listener forget they are listening at all.</p>
-                    <p>On screen, she earned the Soberano Award for Best Actress. Behind the glass, she has guided authors through hundreds of hours of professional audiobook production. What makes Jane rare is not range. It is credibility earned across every medium she has entered.</p>
-                </div>
-                <div class="notebook-paper lang-es">
-                    <div class="notebook-waveform" aria-label="Vista previa de audio próximamente" title="Vista previa de audio próximamente">
-                        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="8" width="3" height="4" rx="1.5" fill="#D4AF37"/>
-                            <rect x="5" y="4" width="3" height="12" rx="1.5" fill="#D4AF37"/>
-                            <rect x="10" y="0" width="3" height="20" rx="1.5" fill="#D4AF37"/>
-                            <rect x="15" y="4" width="3" height="12" rx="1.5" fill="#D4AF37"/>
-                            <rect x="20" y="7" width="3" height="6" rx="1.5" fill="#D4AF37"/>
-                            <rect x="25" y="9" width="3" height="2" rx="1" fill="#D4AF37"/>
-                        </svg>
+                    <div class="about-signature" aria-hidden="true">Jane Santos</div>
+                </article>
+                <article class="about-story lang-es">
+                    <span class="about-kicker">En su propia voz</span>
+                    <blockquote class="about-quote">Toda historia merece sentirse por completo.</blockquote>
+                    <div class="about-copy">
+                        <p>Jane Santos construyó su carrera sobre un principio: toda historia merece ser sentida en su totalidad. A lo largo de 100+ audiolibros y 500+ horas de audio grabado, ese principio nunca ha cambiado.</p>
+                        <p>Es una de las voces más reconocidas en audiolibros en español, habiendo dado vida a obras de Michelle Obama, Toni Morrison, Elizabeth Gilbert, Stephen King y Junot Díaz. La narración de Jane no es lectura. Es interpretación. El tipo de actuación que hace que un oyente olvide que está escuchando.</p>
+                        <p>En pantalla, ganó el Premio Soberano a Mejor Actriz. Detrás del vidrio, ha guiado a autores a través de cientos de horas de producción profesional de audiolibros. Lo que hace única a Jane no es su versatilidad. Es la credibilidad ganada en cada medio que ha habitado.</p>
                     </div>
-                    <p>Jane Santos construyó su carrera sobre un principio: toda historia merece ser sentida en su totalidad. A lo largo de más de 99 audiolibros y 500+ horas de audio grabado, ese principio nunca ha cambiado.</p>
-                    <p>Es una de las voces más reconocidas en audiolibros en español, habiendo dado vida a obras de Michelle Obama, Toni Morrison, Elizabeth Gilbert, Stephen King y Junot Díaz. La narración de Jane no es lectura. Es interpretación. El tipo de actuación que hace que un oyente olvide que está escuchando.</p>
-                    <p>En pantalla, ganó el Premio Soberano a Mejor Actriz. Detrás del vidrio, ha guiado a autores a través de cientos de horas de producción profesional de audiolibros. Lo que hace única a Jane no es su versatilidad. Es la credibilidad ganada en cada medio que ha habitado.</p>
-                </div>
+                    <div class="about-signature" aria-hidden="true">Jane Santos</div>
+                </article>
 
-                <div class="credentials-card">
+                <aside class="credentials-card" aria-label="Jane Santos credentials">
                     <ul class="credentials-list lang-en">
                         <li>SAG-AFTRA Member</li>
                         <li>Performs fluently in English and Spanish</li>
@@ -335,7 +432,7 @@
                         <li>Certificación empresarial de Harvard Online</li>
                         <li>Certificada en Herramientas de Igualdad Económica, Univ. G.W.</li>
                     </ul>
-                </div>
+                </aside>
             </div>
         </div>
     </section>
@@ -357,9 +454,7 @@
                         <h3 class="serif-subtitle pulse-text">The right voice for the right story.</h3>
                         <p>Let's talk.</p>
                         <br>
-                        <a href="mailto:contact@janesantos.com" class="btn">Contact Jane</a>
-                        <br><br>
-                        <a href="https://linkedin.com" target="_blank" class="text-muted">CONNECT ON LINKEDIN</a>
+                        <a href="#book-jane" class="btn" data-book-trigger>Book Jane</a>
                     </div>
                 </div>
             </div>
@@ -375,9 +470,7 @@
                         <h3 class="serif-subtitle pulse-text">La voz indicada para la historia indicada.</h3>
                         <p>Hablemos.</p>
                         <br>
-                        <a href="mailto:contact@janesantos.com" class="btn">Contactar a Jane</a>
-                        <br><br>
-                        <a href="https://linkedin.com" target="_blank" class="text-muted">CONECTAR EN LINKEDIN</a>
+                        <a href="#book-jane" class="btn" data-book-trigger>Reservar a Jane</a>
                     </div>
                 </div>
             </div>
@@ -385,6 +478,6 @@
     </section>
 
     <div class="gold-thread-cursor"></div>
-    <script src="script.js"></script>
+    <script src="script.js?v=21"></script>
 </body>
 </html>
