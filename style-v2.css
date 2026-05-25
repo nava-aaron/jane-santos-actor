@@ -956,6 +956,41 @@ body[data-lang="es"] .lang-en { display: none !important; }
     opacity: 1; /* Fully visible overlay for text legibility */
     background: linear-gradient(to top, rgba(17,17,17,0.95) 0%, rgba(17,17,17,0.5) 100%);
   }
+
+  /* Hide overlay and text content when video is playing on mobile */
+  .panel:has(.video-toggle.is-playing) .panel-overlay,
+  .panel:has(.video-toggle.is-playing) .panel-header,
+  .panel:has(.video-toggle.is-playing) .panel-title,
+  .panel:has(.video-toggle.is-playing) .panel-details {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Let clicks pass through the content area to the video player controls */
+  .panel:has(.video-toggle.is-playing) .panel-content {
+    pointer-events: none !important;
+  }
+
+  /* Reposition the close button to the top-right corner */
+  .panel:has(.video-toggle.is-playing) .video-toggle {
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    margin-top: 0 !important;
+    z-index: 99 !important;
+    pointer-events: auto !important;
+    padding: 0.5rem 1.2rem !important;
+    font-size: 0.75rem !important;
+    border-radius: 999px !important;
+    background-color: var(--gold) !important;
+    color: #111 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+  }
+
+  .panel:has(.video-toggle.is-playing) .video-toggle::before {
+    content: "✕ ";
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 768px) {
