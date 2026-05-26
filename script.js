@@ -21,6 +21,33 @@
                 if (el.tagName === 'OPTION') el.textContent = text;
                 if (el.hasAttribute('placeholder')) el.setAttribute('placeholder', text);
             });
+
+            // Update play-toggle buttons for the correct language
+            document.querySelectorAll('.play-toggle').forEach(function (btn) {
+                var isPlaying = btn.getAttribute('data-playing') === 'true';
+                var attrName = isPlaying ? 'data-pause-label-' + lang : 'data-play-label-' + lang;
+                var text = btn.getAttribute(attrName);
+                if (text) {
+                    btn.textContent = text;
+                } else {
+                    text = btn.getAttribute(isPlaying ? 'data-pause-label' : 'data-play-label');
+                    if (text) btn.textContent = text;
+                }
+            });
+
+            // Update video-toggle buttons for the correct language
+            document.querySelectorAll('.video-toggle').forEach(function (btn) {
+                var isPlaying = btn.classList.contains('is-playing');
+                var attrName = isPlaying ? 'data-close-label-' + lang : 'data-open-label-' + lang;
+                var text = btn.getAttribute(attrName);
+                if (text) {
+                    btn.textContent = text;
+                } else {
+                    text = btn.getAttribute(isPlaying ? 'data-close-label' : 'data-open-label');
+                    if (text) btn.textContent = text;
+                }
+            });
+
             try { localStorage.setItem('janeLang', lang); } catch (e) { /* private browsing */ }
         }
 
@@ -467,11 +494,15 @@
 
             if (audio) {
                 function playLabel(btn) {
-                    return btn ? (btn.getAttribute('data-play-label') || 'Listen to Sample') : 'Listen to Sample';
+                    if (!btn) return 'Listen to Sample';
+                    var lang = document.body.getAttribute('data-lang') || 'en';
+                    return btn.getAttribute('data-play-label-' + lang) || btn.getAttribute('data-play-label') || 'Listen to Sample';
                 }
 
                 function pauseLabel(btn) {
-                    return btn ? (btn.getAttribute('data-pause-label') || 'Stop Sample') : 'Stop Sample';
+                    if (!btn) return 'Stop Sample';
+                    var lang = document.body.getAttribute('data-lang') || 'en';
+                    return btn.getAttribute('data-pause-label-' + lang) || btn.getAttribute('data-pause-label') || 'Stop Sample';
                 }
 
                 function setAudioButton(btn, isPlaying) {
@@ -489,6 +520,11 @@
                     panel.classList.remove('is-playing');
                     setAudioButton(playBtn, false);
                 }
+
+                // Safely clear fade timer on pause
+                audio.addEventListener('pause', function () {
+                    clearInterval(fadeTimer);
+                });
 
                 function fadeAudioIn(a, durationMs) {
                     a.volume = 0;
@@ -558,7 +594,8 @@
                                     container.style.opacity = '0';
                                     container.style.pointerEvents = 'none';
                                 }
-                                btn.textContent = btn.getAttribute('data-open-label') || 'Watch Trailer';
+                                var otherLang = document.body.getAttribute('data-lang') || 'en';
+                                btn.textContent = btn.getAttribute('data-open-label-' + otherLang) || btn.getAttribute('data-open-label') || 'Watch Trailer';
                                 btn.classList.remove('is-playing');
                                 if (otherPanelVideo) otherPanelVideo.classList.remove('is-playing');
                             });
@@ -577,12 +614,45 @@
                                 }
                             });
                             
-                            audio.volume = 1;
+                            var startTime = parseFloat(audio.getAttribute('data-start-time') || '0');
+                            var fadeDuration = parseInt(audio.getAttribute('data-fade-in') || '0', 10);
+                            
+                            if (audio.currentTime === 0 && startTime > 0) {
+                                if (audio.readyState >= 1) {
+                                    audio.currentTime = startTime;
+                                } else {
+                                    var setTime = function() {
+                                        audio.currentTime = startTime;
+                                        audio.removeEventListener('loadedmetadata', setTime);
+                                    };
+                                    audio.addEventListener('loadedmetadata', setTime);
+                                }
+                            }
+
+                            if (fadeDuration > 0) {
+                                audio.volume = 0;
+                            } else {
+                                audio.volume = 1;
+                            }
+
                             setAudioButton(playBtn, true);
                             panel.classList.add('is-playing');
+                            
                             audio.play().then(function () {
                                 setAudioButton(playBtn, true);
                                 panel.classList.add('is-playing');
+                                
+                                if (fadeDuration > 0) {
+                                    var steps = fadeDuration / 50;
+                                    var step = 1 / steps;
+                                    clearInterval(fadeTimer);
+                                    fadeTimer = setInterval(function () {
+                                        audio.volume = Math.min(1, audio.volume + step);
+                                        if (audio.volume >= 1) {
+                                            clearInterval(fadeTimer);
+                                        }
+                                    }, 50);
+                                }
                             }).catch(function(err) {
                                 console.warn('[Jane] Audio playback failed:', err);
                                 setAudioButton(playBtn, false);
@@ -626,7 +696,8 @@
                                     otherPanel.classList.remove('is-playing');
                                     var otherBtn = otherPanel.querySelector('.play-toggle');
                                     if (otherBtn) {
-                                        otherBtn.textContent = otherBtn.getAttribute('data-play-label') || 'Listen to Sample';
+                                        var otherLang = document.body.getAttribute('data-lang') || 'en';
+                                        otherBtn.textContent = otherBtn.getAttribute('data-play-label-' + otherLang) || otherBtn.getAttribute('data-play-label') || 'Listen to Sample';
                                         otherBtn.classList.remove('is-playing');
                                         otherBtn.setAttribute('data-playing', 'false');
                                     }
@@ -645,7 +716,8 @@
                         videoContainer.style.opacity = '1';
                         videoContainer.style.pointerEvents = 'auto';
 
-                        videoBtn.textContent = videoBtn.getAttribute('data-close-label') || 'Close Trailer';
+                        var activeLang = document.body.getAttribute('data-lang') || 'en';
+                        videoBtn.textContent = videoBtn.getAttribute('data-close-label-' + activeLang) || videoBtn.getAttribute('data-close-label') || 'Close Trailer';
                         videoBtn.classList.add('is-playing');
                         panel.classList.add('is-playing');
                     }
@@ -656,7 +728,8 @@
                     videoContainer.innerHTML = '';
                     videoContainer.style.opacity = '0';
                     videoContainer.style.pointerEvents = 'none';
-                    videoBtn.textContent = videoBtn.getAttribute('data-open-label') || 'Watch Trailer';
+                    var activeLang = document.body.getAttribute('data-lang') || 'en';
+                    videoBtn.textContent = videoBtn.getAttribute('data-open-label-' + activeLang) || videoBtn.getAttribute('data-open-label') || 'Watch Trailer';
                     videoBtn.classList.remove('is-playing');
                     panel.classList.remove('is-playing');
                 }
