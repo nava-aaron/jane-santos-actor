@@ -250,6 +250,9 @@
             }
 
             function pausePanelMedia() {
+                var actingVideo = document.getElementById('acting-video');
+                if (actingVideo && !actingVideo.paused) actingVideo.pause();
+
                 document.querySelectorAll('.panel-audio').forEach(function (audio) {
                     if (!audio.paused) {
                         audio.pause();
@@ -260,7 +263,8 @@
                         panel.classList.remove('is-playing');
                         var btn = panel.querySelector('.play-toggle');
                         if (btn) {
-                            btn.textContent = btn.getAttribute('data-play-label') || 'Listen to Sample';
+                            var otherLang = document.body.getAttribute('data-lang') || 'en';
+                            btn.textContent = btn.getAttribute('data-play-label-' + otherLang) || btn.getAttribute('data-play-label') || 'Listen to Sample';
                             btn.classList.remove('is-playing');
                             btn.setAttribute('data-playing', 'false');
                         }
@@ -274,7 +278,8 @@
                         container.style.opacity = '0';
                         container.style.pointerEvents = 'none';
                     }
-                    btn.textContent = btn.getAttribute('data-open-label') || 'Watch Trailer';
+                    var otherLang = document.body.getAttribute('data-lang') || 'en';
+                    btn.textContent = btn.getAttribute('data-open-label-' + otherLang) || btn.getAttribute('data-open-label') || 'Watch Trailer';
                     btn.classList.remove('is-playing');
                     if (panel) panel.classList.remove('is-playing');
                 });
@@ -614,6 +619,9 @@
                                 }
                             });
                             
+                            var actingVideo = document.getElementById('acting-video');
+                            if (actingVideo && !actingVideo.paused) actingVideo.pause();
+                            
                             var startTime = parseFloat(audio.getAttribute('data-start-time') || '0');
                             var fadeDuration = parseInt(audio.getAttribute('data-fade-in') || '0', 10);
                             
@@ -749,6 +757,71 @@
                 });
             }
         });
+
+        // ─── 10 · REELS TAB SWITCHER & SYNCING ───────────────────────────────
+        var tabBtns = document.querySelectorAll('.reels-tabs .tab-btn');
+        tabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var tabName = btn.getAttribute('data-tab');
+                
+                // Set active tab button
+                tabBtns.forEach(function (b) { b.classList.toggle('active', b === btn); });
+                
+                // Switch panes with cross-fade
+                var panes = document.querySelectorAll('.reel-content-pane');
+                panes.forEach(function (pane) {
+                    if (pane.id === 'pane-' + tabName) {
+                        pane.style.display = 'block';
+                        setTimeout(function () {
+                            pane.style.opacity = '1';
+                        }, 50);
+                    } else {
+                        pane.style.opacity = '0';
+                        pane.style.display = 'none';
+                    }
+                });
+                
+                // If switching to acting reel, pause any playing voice reel
+                if (tabName === 'acting') {
+                    var voiceAudio = document.querySelector('[data-audio-player] audio');
+                    if (voiceAudio && !voiceAudio.paused) voiceAudio.pause();
+                } else {
+                    // If switching to voice reel, pause acting video
+                    var actingVideo = document.getElementById('acting-video');
+                    if (actingVideo && !actingVideo.paused) actingVideo.pause();
+                }
+            });
+        });
+
+        // Pause other media when acting video plays
+        var actingVideo = document.getElementById('acting-video');
+        if (actingVideo) {
+            actingVideo.addEventListener('play', function () {
+                // Pause voice reel
+                var voiceAudio = document.querySelector('[data-audio-player] audio');
+                if (voiceAudio && !voiceAudio.paused) voiceAudio.pause();
+                
+                // Pause other panel audios
+                document.querySelectorAll('.panel-audio').forEach(function(otherAudio) {
+                    if (!otherAudio.paused) {
+                        otherAudio.pause();
+                        otherAudio.currentTime = 0;
+                        otherAudio.volume = 1;
+                        var otherPanel = otherAudio.closest('.panel');
+                        if (otherPanel) {
+                            otherPanel.classList.remove('is-playing');
+                            var otherBtn = otherPanel.querySelector('.play-toggle');
+                            if (otherBtn) {
+                                var otherLang = document.body.getAttribute('data-lang') || 'en';
+                                otherBtn.textContent = otherBtn.getAttribute('data-play-label-' + otherLang) || otherBtn.getAttribute('data-play-label') || 'Listen to Sample';
+                                otherBtn.classList.remove('is-playing');
+                                otherBtn.setAttribute('data-playing', 'false');
+                            }
+                        }
+                    }
+                });
+            });
+        }
     } catch (e) { console.warn('[Jane] Audio error:', e); }
 
 })();

@@ -31,8 +31,8 @@
     
     <link rel="preload" as="image" href="assets/jane-santos-hero.webp" imagesrcset="assets/jane-santos-hero-840.webp 840w, assets/jane-santos-hero.webp 1024w" imagesizes="(max-width: 768px) 100vw, 50vw" fetchpriority="high">
     
-    <link rel="stylesheet" href="style-v2.css?v=24">
-    <script src="script.js?v=24" defer></script>
+    <link rel="stylesheet" href="style-v2.css?v=25">
+    <script src="script.js?v=25" defer></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -66,14 +66,14 @@
         <div class="nav-brand">Jane Santos</div>
         <div class="nav-links lang-en">
             <a href="#hero">Home</a>
-            <a href="#voice-reel">Voice Reel</a>
+            <a href="#voice-reel">Voice/Acting Reels</a>
             <a href="#work">Selected Work</a>
             <a href="#about">About Jane</a>
             <a href="#coaching">Consulting</a>
         </div>
         <div class="nav-links lang-es">
             <a href="#hero">Inicio</a>
-            <a href="#voice-reel">Reel de Voz</a>
+            <a href="#voice-reel">Reels de Voz/Actuación</a>
             <a href="#work">Portafolio</a>
             <a href="#about">Sobre Jane</a>
             <a href="#coaching">Asesoría</a>
@@ -170,42 +170,68 @@
         </div>
     </section>
 
-    <!-- Voice Reel Section -->
+    <!-- Voice & Acting Reels Section -->
     <section id="voice-reel" class="voice-reel-section">
         <div class="voice-reel-inner">
             <div class="voice-reel-copy">
-                <span class="eyebrow lang-en">Voice-Over Reel</span>
-                <span class="eyebrow lang-es">Reel de voz</span>
-                <h2 class="serif-title lang-en">Spanish commercial range, in one minute.</h2>
-                <h2 class="serif-title lang-es">Rango comercial, en un minuto.</h2>
-                <p class="serif-subtitle lang-en">Promos, radio spots, narration, and performance with precision and presence.</p>
-                <p class="serif-subtitle lang-es">Promociones, radio, narración y actuación con precisión y presencia.</p>
+                <span class="eyebrow lang-en">Voice & Acting Reels</span>
+                <span class="eyebrow lang-es">Reels de Voz y Actuación</span>
+                <h2 class="serif-title lang-en">Hear her voice, see her performance.</h2>
+                <h2 class="serif-title lang-es">Escucha su voz, mira su actuación.</h2>
+                <p class="serif-subtitle lang-en">Commercial voice-over range and on-screen acting highlights showcasing depth and versatility.</p>
+                <p class="serif-subtitle lang-es">Rango comercial de voz y selección de actuaciones en pantalla que muestran su versatilidad y profundidad.</p>
             </div>
 
-            <div class="voice-player" data-audio-player>
-                <audio src="assets/jane-santos-audio-reel.mp3" preload="none"></audio>
-                <div class="voice-track">
-                    <div class="voice-player-topline">
-                        <span class="voice-player-title lang-en">Spanish Voice Reel</span>
-                        <span class="voice-player-title lang-es">Reel comercial</span>
-                        <span class="voice-time">0:00 / 1:00</span>
-                    </div>
-                    <div class="voice-waveform" aria-hidden="true">
-                        <span></span><span></span><span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span><span></span><span></span>
-                    </div>
-                    <button class="voice-progress" type="button" aria-label="Seek audio reel">
-                        <span class="voice-progress-fill"></span>
+            <div class="reels-container">
+                <!-- Tab Selector -->
+                <div class="reels-tabs">
+                    <button class="tab-btn active" data-tab="voice" type="button">
+                        <span class="lang-en">Voice Reel</span>
+                        <span class="lang-es">Reel de Voz</span>
                     </button>
-                    <div class="voice-player-cue lang-en">Click to listen with sound</div>
-                    <div class="voice-player-cue lang-es">Haz clic para escuchar</div>
+                    <button class="tab-btn" data-tab="acting" type="button">
+                        <span class="lang-en">Acting Reel</span>
+                        <span class="lang-es">Reel de Actuación</span>
+                    </button>
                 </div>
-                <button class="voice-play" type="button" aria-label="Play voice-over reel">
-                    <span class="voice-play-icon" aria-hidden="true"></span>
-                    <span class="voice-play-text lang-en">Play reel</span>
-                    <span class="voice-play-text lang-es">Escuchar</span>
-                </button>
+
+                <div class="reels-content-wrapper">
+                    <!-- Voice Reel Pane -->
+                    <div class="reel-content-pane active" id="pane-voice">
+                        <div class="voice-player" data-audio-player>
+                            <audio src="assets/jane-santos-audio-reel.mp3" preload="none"></audio>
+                            <div class="voice-track">
+                                <div class="voice-player-topline">
+                                    <span class="voice-player-title lang-en">Spanish Voice Reel</span>
+                                    <span class="voice-player-title lang-es">Reel comercial</span>
+                                    <span class="voice-time">0:00 / 1:00</span>
+                                </div>
+                                <div class="voice-waveform" aria-hidden="true">
+                                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                                </div>
+                                <button class="voice-progress" type="button" aria-label="Seek audio reel">
+                                    <span class="voice-progress-fill"></span>
+                                </button>
+                                <div class="voice-player-cue lang-en">Click to listen with sound</div>
+                                <div class="voice-player-cue lang-es">Haz clic para escuchar</div>
+                            </div>
+                            <button class="voice-play" type="button" aria-label="Play voice-over reel">
+                                <span class="voice-play-icon" aria-hidden="true"></span>
+                                <span class="voice-play-text lang-en">Play reel</span>
+                                <span class="voice-play-text lang-es">Escuchar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Acting Reel Pane -->
+                    <div class="reel-content-pane" id="pane-acting">
+                        <div class="acting-video-player">
+                            <video id="acting-video" src="assets/jane-santos-acting-reel.mp4" controls preload="none"></video>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
