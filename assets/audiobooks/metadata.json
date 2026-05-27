@@ -1,0 +1,242 @@
+{
+  "generated_at": "2026-05-27T20:54:43.965545+00:00",
+  "source": "Audible product pages and Amazon media CDN",
+  "asset_policy_note": "Cover art is stored locally for site reliability and performance. Confirm usage rights before publishing.",
+  "items": [
+    {
+      "slug": "amiga-deja-de-disculparte",
+      "title": "Amiga, deja de disculparte",
+      "author": "Rachel Hollis",
+      "narrator": "Jhoana Nichols",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/Amiga-deja-de-disculparte-Girl-Stop-Apologizing-Audiobook/1400213614?eac_link=TqLNjiLUirKV&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=1400213614&qid=dwenq2Z6KZ&eac_id=141-2072986-1412118_dwenq2Z6KZ&sr=1-1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/51FCxtcMYPL._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/51FCxtcMYPL._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/amiga-deja-de-disculparte.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 59716,
+        "sha256": "3366a543ecbdb13fd628f9fbbe00d12b83a0f7035bbf07c3dbcedc42a2b85d39"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/amiga-deja-de-disculparte.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 54450,
+        "format": "webp"
+      },
+      "alt": "Amiga, deja de disculparte audiobook cover art"
+    },
+    {
+      "slug": "cuanto-te-pesa-lo-que-te-pasa",
+      "title": "¿Cuánto te pesa lo que te pasa? [How Much Does What Happens Weigh on You?]",
+      "author": "Luz María Doria",
+      "narrator": "Luz María Doria, Marcela Sarmientos, Diana Correa Rodríguez, Melissa Escobar, María Paz Blanco, Lourdes Del Rio, Aly Sánchez, Monica Trasandes, Raúl González, Andrés López, Elizabeth Correa, Mauro Castillejos, Lizzette Díaz, Carola Parmejano, full cast",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/Cuanto-te-pesa-lo-que-te-pasa-How-Much-Does-What-Happens-Weigh-on-You-Audiobook/B0D3267QXR?qid=1779909708&sr=1-1&ref_pageloadid=not_applicable&pf_rd_p=83218cca-c308-412f-bfcf-90198b687a2f&pf_rd_r=XKGNMBAETXGZ8J9DE2J5&plink=220VK7rPrcLcL9L1&pageLoadId=R9Es7MJJKOFydrY3&creativeId=0d6f6720-f41c-457e-a42b-8c8dceb62f2c&ref=a_search_c3_lProduct_1_1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/41qiSTOYpUL._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/41qiSTOYpUL._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/cuanto-te-pesa-lo-que-te-pasa.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 28527,
+        "sha256": "bce1012c273801de5705a41312ee5c3cb3f761ead498842c487d0657d8051950"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/cuanto-te-pesa-lo-que-te-pasa.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 22850,
+        "format": "webp"
+      },
+      "alt": "¿Cuánto te pesa lo que te pasa? [How Much Does What Happens Weigh on You?] audiobook cover art"
+    },
+    {
+      "slug": "el-poder-del-enfoque",
+      "title": "El poder del enfoque [The Power of Focus]",
+      "author": "Ronald Day",
+      "narrator": "Ronald Day, Jane Santos, Raúl Arrieta",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/El-poder-del-enfoque-The-Power-of-Focus-Audiobook/B0GL49D8JM?eac_link=aNYtUOkgEHkR&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=B0GL49D8JM&qid=zlgixuvlfH&eac_id=141-2072986-1412118_zlgixuvlfH&sr=1-1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/51w-KVX3BWL._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/51w-KVX3BWL._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/el-poder-del-enfoque.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 35090,
+        "sha256": "d39e701c61dd95daed76e4d6b8111bd8a8db17a30457fd85a2ddd57400f88580"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/el-poder-del-enfoque.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 26064,
+        "format": "webp"
+      },
+      "alt": "El poder del enfoque [The Power of Focus] audiobook cover art"
+    },
+    {
+      "slug": "una-vida-sin-limites",
+      "title": "Una vida sin límites [A Life Without Limits]",
+      "author": "Alejandra Llamas",
+      "narrator": "Alejandra Llamas",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/Una-vida-sin-limites-A-Life-Without-Limits-Audiobook/607318316X?qid=1779909788&sr=1-2&ref_pageloadid=not_applicable&pf_rd_p=83218cca-c308-412f-bfcf-90198b687a2f&pf_rd_r=JK8MS986X24BKSN7TAWY&plink=S7KcrDxZQAH9O6xg&pageLoadId=QdYS1rRZnptebiE0&creativeId=0d6f6720-f41c-457e-a42b-8c8dceb62f2c&ref=a_search_c3_lProduct_1_2",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/41wA95SM+EL._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/41wA95SM+EL._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/una-vida-sin-limites.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 26909,
+        "sha256": "96ce90c8f26755379ed615193fa8c9be7519b86c4aed0f5358aed550f88bb3f5"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/una-vida-sin-limites.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 14584,
+        "format": "webp"
+      },
+      "alt": "Una vida sin límites [A Life Without Limits] audiobook cover art"
+    },
+    {
+      "slug": "fluir-para-no-sufrir",
+      "title": "Fluir para no sufrir [Flow, Don't Suffer]",
+      "author": "Ismael Cala",
+      "narrator": "Ismael Cala",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/Fluir-para-no-sufrir-Flow-Dont-Suffer-Audiobook/B0B44CGH34?eac_link=ZMoFRQpOBkrd&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=B0B44CGH34&qid=nbL9fRLIJc&eac_id=141-2072986-1412118_nbL9fRLIJc&sr=1-1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/51mbVhW0x9L._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/51mbVhW0x9L._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/fluir-para-no-sufrir.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 51796,
+        "sha256": "b67c3551bc8f0e307538b1a4ce226ad99257aec17bd68c8609b8578c33589e6f"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/fluir-para-no-sufrir.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 47754,
+        "format": "webp"
+      },
+      "alt": "Fluir para no sufrir [Flow, Don't Suffer] audiobook cover art"
+    },
+    {
+      "slug": "ir-al-cielo-y-volver",
+      "title": "Ir al cielo y volver [Go to Heaven and Back]",
+      "author": "Leonor Varela",
+      "narrator": "Leonor Varela",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/Ir-al-cielo-y-volver-Go-to-Heaven-and-Back-Audiobook/956605632X?eac_link=4ALRgdQxn4Lj&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=956605632X&qid=IIOTbUm0XJ&eac_id=141-2072986-1412118_IIOTbUm0XJ&sr=1-1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/51u67Sk9s-L._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/51u67Sk9s-L._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/ir-al-cielo-y-volver.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 50525,
+        "sha256": "55c9325c54ed6bfbe699bd33f55debff89925a6ade5872bcd12d3d0071509078"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/ir-al-cielo-y-volver.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 46398,
+        "format": "webp"
+      },
+      "alt": "Ir al cielo y volver [Go to Heaven and Back] audiobook cover art"
+    },
+    {
+      "slug": "la-gran-apuesta",
+      "title": "La gran apuesta [The Big Short]",
+      "author": "Michael Lewis, Francisco José Ramos Mena",
+      "narrator": "Raúl Arrieta",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/La-gran-apuesta-The-Big-Short-Audiobook/8417636951?qid=1779909927&sr=1-1&ref_pageloadid=not_applicable&pf_rd_p=83218cca-c308-412f-bfcf-90198b687a2f&pf_rd_r=YJGXZ8E32ADWKZ93Y4S3&plink=IF6MHxTOOiNpVJhJ&pageLoadId=G1yzebPof6GSv6C9&creativeId=0d6f6720-f41c-457e-a42b-8c8dceb62f2c&ref=a_search_c3_lProduct_1_1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/41pX88r36TL._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/41pX88r36TL._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/la-gran-apuesta.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 24215,
+        "sha256": "99731771aeb6d336e89cea37609d653adff79f6bd490546c951ed580194caadd"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/la-gran-apuesta.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 15940,
+        "format": "webp"
+      },
+      "alt": "La gran apuesta [The Big Short] audiobook cover art"
+    },
+    {
+      "slug": "la-proxima-vez-el-fuego",
+      "title": "La próxima vez el fuego",
+      "author": "James Baldwin, Paula Zumalacárregui - translator",
+      "narrator": "Jane Santos, Modesto Lacén",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/La-proxima-vez-el-fuego-Audiobook/B0D6C2LDX6?qid=1779909967&sr=1-1&ref_pageloadid=not_applicable&pf_rd_p=83218cca-c308-412f-bfcf-90198b687a2f&pf_rd_r=90NWADEWAV7YTFQZBQ5Z&plink=wjvdEWh4o4jKnVxs&pageLoadId=KjvK88eVSsBdKj7h&creativeId=0d6f6720-f41c-457e-a42b-8c8dceb62f2c&ref=a_search_c3_lProduct_1_1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/41R+tycV7TL._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/41R+tycV7TL._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/la-proxima-vez-el-fuego.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 31096,
+        "sha256": "423363d1a12c99f70a194b1f3328b35bceee1015dcbaf3080a8d6070102f39af"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/la-proxima-vez-el-fuego.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 26978,
+        "format": "webp"
+      },
+      "alt": "La próxima vez el fuego audiobook cover art"
+    },
+    {
+      "slug": "como-ser-antirracista",
+      "title": "Cómo ser antirracista",
+      "author": "Ibram X. Kendi",
+      "narrator": "Tony Dandrades",
+      "publisher": "",
+      "language": "",
+      "audible_url": "https://www.audible.com/pd/Como-ser-antirracista-How-to-Be-Antiracist-Audiobook/B09GG9WS4C?qid=1779910057&sr=1-1&ref_pageloadid=not_applicable&pf_rd_p=83218cca-c308-412f-bfcf-90198b687a2f&pf_rd_r=1E10JNC7SWMGQ7NFHWPQ&plink=WXKdNQ2VjI6DYc5G&pageLoadId=QqaQ8cOUOnGvmSBo&creativeId=0d6f6720-f41c-457e-a42b-8c8dceb62f2c&ref=a_search_c3_lProduct_1_1",
+      "source_display_image_url": "https://m.media-amazon.com/images/I/413ml00afrL._SL500_.jpg",
+      "source_high_res_image_url": "https://m.media-amazon.com/images/I/413ml00afrL._SL1800_.jpg",
+      "original_image": {
+        "path": "audiobook screenshots/originals/como-ser-antirracista.jpg",
+        "width": 500,
+        "height": 500,
+        "bytes": 32208,
+        "sha256": "e9a1944388908f9a2d53922f89ece3512e86351fa97fb9372bbd36bf95c404fc"
+      },
+      "site_image": {
+        "path": "assets/audiobooks/como-ser-antirracista.webp",
+        "width": 500,
+        "height": 500,
+        "bytes": 24826,
+        "format": "webp"
+      },
+      "alt": "Cómo ser antirracista audiobook cover art"
+    }
+  ],
+  "failures": []
+}

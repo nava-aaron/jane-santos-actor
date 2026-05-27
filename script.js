@@ -824,4 +824,60 @@
         }
     } catch (e) { console.warn('[Jane] Audio error:', e); }
 
+    // ─── 11 · WORK TAB SWITCHER ──────────────────────────────────────────
+    try {
+        var workTabBtns = document.querySelectorAll('.work-tabs .work-tab-btn');
+        workTabBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var tabName = btn.getAttribute('data-work-tab');
+                
+                // Set active tab button
+                workTabBtns.forEach(function (b) { b.classList.toggle('active', b === btn); });
+                
+                // Switch panes with cross-fade
+                var panes = document.querySelectorAll('.work-content-pane');
+                panes.forEach(function (pane) {
+                    if (pane.id === 'pane-' + tabName) {
+                        pane.style.display = 'block';
+                        setTimeout(function () {
+                            pane.style.opacity = '1';
+                        }, 50);
+                    } else {
+                        pane.style.opacity = '0';
+                        pane.style.display = 'none';
+                    }
+                });
+
+                // Pause accordion media when switching tabs
+                if (tabName !== 'featured') {
+                    if (typeof pausePanelMedia === 'function') {
+                        pausePanelMedia();
+                    } else {
+                        // Fallback: pause any panel audio
+                        document.querySelectorAll('.panel-audio').forEach(function (audio) {
+                            if (!audio.paused) {
+                                audio.pause();
+                                audio.currentTime = 0;
+                            }
+                            var panel = audio.closest('.panel');
+                            if (panel) panel.classList.remove('is-playing');
+                        });
+                        // Pause panel video
+                        document.querySelectorAll('.video-toggle.is-playing').forEach(function (btn) {
+                            var panel = btn.closest('.panel');
+                            var container = panel ? panel.querySelector('.panel-video-container') : null;
+                            if (container) {
+                                container.innerHTML = '';
+                                container.style.opacity = '0';
+                                container.style.pointerEvents = 'none';
+                            }
+                            btn.classList.remove('is-playing');
+                            if (panel) panel.classList.remove('is-playing');
+                        });
+                    }
+                }
+            });
+        });
+    } catch (e) { console.warn('[Jane] Work tab switcher error:', e); }
+
 })();

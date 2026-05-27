@@ -1757,3 +1757,216 @@ body[data-lang="es"] .lang-en { display: none !important; }
   object-fit: cover;
 }
 
+/* ─── 11 · WORK TABS & PORTRAIT GALLERY ────────────────────────────────── */
+.work-tabs-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  margin-bottom: 3.5rem;
+  z-index: 10;
+  position: relative;
+}
+
+.work-tabs {
+  display: flex;
+  gap: 2rem;
+  border-bottom: 1px solid rgba(17,17,17,0.08);
+  padding-bottom: 0.15rem;
+}
+
+.work-tab-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.65rem 0.5rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.work-tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -0.2rem;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--gold);
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease;
+}
+
+.work-tab-btn:hover {
+  color: var(--text-dark);
+}
+
+.work-tab-btn.active {
+  color: var(--gold);
+}
+
+.work-tab-btn.active::after {
+  transform: scaleX(1);
+}
+
+.work-content-pane {
+  display: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.work-content-pane.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Portrait Gallery Grid */
+.portrait-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.portrait-card {
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 4px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 300ms ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.portrait-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 38px rgba(67, 75, 112, 0.14);
+  border-color: var(--gold);
+}
+
+.portrait-cover-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.portrait-cover-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 450ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.portrait-card:hover .portrait-cover-wrapper img {
+  transform: scale(1.04);
+}
+
+.portrait-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.portrait-author {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.portrait-book-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.portrait-role {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.portrait-audible-link {
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dark);
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  transition: color 250ms ease, transform 250ms ease;
+  width: fit-content;
+}
+
+.portrait-audible-link:hover {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
+/* Responsiveness for grid */
+@media (max-width: 992px) {
+  .portrait-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .portrait-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .work-tabs {
+    gap: 1rem;
+  }
+  .work-tab-btn {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+  }
+  .portrait-gallery-intro .serif-title {
+    font-size: 1.8rem !important;
+  }
+  .portrait-gallery-intro .serif-subtitle {
+    font-size: 0.95rem !important;
+    margin-bottom: 2.25rem !important;
+    line-height: 1.6 !important;
+  }
+  .work-tabs-container {
+    margin-bottom: 2.25rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .work-tabs {
+    gap: 0.5rem;
+  }
+  .work-tab-btn {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 0.2rem;
+  }
+}
+

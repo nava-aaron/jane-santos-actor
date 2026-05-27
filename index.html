@@ -243,7 +243,21 @@
             <h2 class="section-title mask-sweep lang-es">Portafolio</h2>
         </div>
 
-        <div class="dynamic-accordion">
+        <div class="work-tabs-container">
+            <div class="work-tabs">
+                <button class="work-tab-btn active" data-work-tab="featured" type="button">
+                    <span class="lang-en">Featured Portfolio</span>
+                    <span class="lang-es">Portafolio Destacado</span>
+                </button>
+                <button class="work-tab-btn" data-work-tab="directing" type="button">
+                    <span class="lang-en">Directing Credits</span>
+                    <span class="lang-es">Créditos de Dirección</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="work-content-pane active" id="pane-featured">
+            <div class="dynamic-accordion">
             <!-- Audiobook 1 -->
             <div class="panel" data-panel-image="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/0b/df/b5/0bdfb513-e9e0-ac59-3e3d-f0ccd21d7bb5/9780525633686.d.jpg/600x600bb.jpg">
                 <div class="panel-bg" style="--rest-bg-size: auto 72%; --rest-bg-position: center center;"></div>
@@ -478,6 +492,200 @@
                        data-pause-label="Stop Sample">
                       Listen to Sample
                     </a>
+                </div>
+            </div>
+        </div> <!-- End of dynamic-accordion -->
+        </div> <!-- End of pane-featured -->
+
+        <div class="work-content-pane" id="pane-directing">
+            <!-- Audiobook Directing Credits / Title & Curated Highlights Grid -->
+            <div class="portrait-gallery-intro">
+                <!-- English Version -->
+                <div class="lang-en">
+                    <h3 class="serif-title" style="font-size: 2.2rem; text-align: center; margin-bottom: 1rem; color: var(--gold);">Audiobook Directing Credits: Selected Highlights</h3>
+                    <p class="serif-subtitle" style="text-align: center; max-width: 44rem; margin: 0 auto 3.5rem auto; font-size: 1.1rem; line-height: 1.7;">
+                        A great performance begins long before the microphone turns on. This selection highlights audiobook titles directed by Jane Santos, guiding narrators and authors toward authentic, nuanced readings aligned with the vision of each work.
+                    </p>
+                </div>
+                <!-- Spanish Version -->
+                <div class="lang-es">
+                    <h3 class="serif-title" style="font-size: 2.2rem; text-align: center; margin-bottom: 1rem; color: var(--gold);">Créditos de Dirección de Audiolibros: Destacados</h3>
+                    <p class="serif-subtitle" style="text-align: center; max-width: 44rem; margin: 0 auto 3.5rem auto; font-size: 1.1rem; line-height: 1.7;">
+                        Una gran interpretación comienza mucho antes de encender el micrófono. Esta selección reúne títulos dirigidos por Jane Santos, acompañando a narradores y autores en lecturas auténticas, matizadas y alineadas con la visión de cada obra.
+                    </p>
+                </div>
+            </div>
+
+            <div class="portrait-grid">
+                <!-- Card 1: La gran apuesta -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/la-gran-apuesta.webp" alt="La gran apuesta audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Michael Lewis</span>
+                        <h4 class="portrait-book-title"><i>La gran apuesta</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed by Jane Santos</span>
+                            <span class="lang-es">Dirigido por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/La-gran-apuesta-The-Big-Short-Audiobook/8417636951?qid=1779909927&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: La próxima vez el fuego -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/la-proxima-vez-el-fuego.webp" alt="La próxima vez el fuego audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">James Baldwin</span>
+                        <h4 class="portrait-book-title"><i>La próxima vez el fuego</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed &amp; Co-Narrated by Jane Santos</span>
+                            <span class="lang-es">Dirigido y Co-Narrado por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/La-proxima-vez-el-fuego-Audiobook/B0D6C2LDX6?qid=1779909967&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Cómo ser antirracista -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/como-ser-antirracista.webp" alt="Cómo ser antirracista audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Ibram X. Kendi</span>
+                        <h4 class="portrait-book-title"><i>Cómo ser antirracista</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed by Jane Santos</span>
+                            <span class="lang-es">Dirigido por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/Como-ser-antirracista-How-to-Be-Antiracist-Audiobook/B09GG9WS4C?qid=1779910057&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4: El poder del enfoque -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/el-poder-del-enfoque.webp" alt="El poder del enfoque audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Ronald Day</span>
+                        <h4 class="portrait-book-title"><i>El poder del enfoque</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed &amp; Narrated by Jane Santos</span>
+                            <span class="lang-es">Dirigido y Narrado por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/El-poder-del-enfoque-The-Power-of-Focus-Audiobook/B0GL49D8JM?eac_link=aNYtUOkgEHkR&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=B0GL49D8JM&qid=zlgixuvlfH&eac_id=141-2072986-1412118_zlgixuvlfH&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 5: Fluir para no sufrir -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/fluir-para-no-sufrir.webp" alt="Fluir para no sufrir audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Ismael Cala</span>
+                        <h4 class="portrait-book-title"><i>Fluir para no sufrir</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed by Jane Santos</span>
+                            <span class="lang-es">Dirigido por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/Fluir-para-no-sufrir-Flow-Dont-Suffer-Audiobook/B0B44CGH34?eac_link=ZMoFRQpOBkrd&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=B0B44CGH34&qid=nbL9fRLIJc&eac_id=141-2072986-1412118_nbL9fRLIJc&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 6: ¿Cuánto te pesa lo que te pasa? -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/cuanto-te-pesa-lo-que-te-pasa.webp" alt="¿Cuánto te pesa lo que te pasa? audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Luz María Doria</span>
+                        <h4 class="portrait-book-title"><i>¿Cuánto te pesa lo que te pasa?</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed by Jane Santos</span>
+                            <span class="lang-es">Dirigido por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/Cuanto-te-pesa-lo-que-te-pasa-How-Much-Does-What-Happens-Weigh-on-You-Audiobook/B0D3267QXR?qid=1779909708&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 7: Amiga, deja de disculparte -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/amiga-deja-de-disculparte.webp" alt="Amiga, deja de disculparte audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Rachel Hollis</span>
+                        <h4 class="portrait-book-title"><i>Amiga, deja de disculparte</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed by Jane Santos</span>
+                            <span class="lang-es">Dirigido por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/Amiga-deja-de-disculparte-Girl-Stop-Apologizing-Audiobook/1400213614?eac_link=TqLNjiLUirKV&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=1400213614&qid=dwenq2Z6KZ&eac_id=141-2072986-1412118_dwenq2Z6KZ&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 8: Una vida sin límites -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/una-vida-sin-limites.webp" alt="Una vida sin límites audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Alejandra Llamas</span>
+                        <h4 class="portrait-book-title"><i>Una vida sin límites</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed by Jane Santos</span>
+                            <span class="lang-es">Dirigido por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/Una-vida-sin-limites-A-Life-Without-Limits-Audiobook/607318316X?qid=1779909788&sr=1-2" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 9: Ir al cielo y volver -->
+                <div class="portrait-card">
+                    <div class="portrait-cover-wrapper">
+                        <img src="assets/audiobooks/ir-al-cielo-y-volver.webp" alt="Ir al cielo y volver audiobook cover art" width="500" height="500" loading="lazy">
+                    </div>
+                    <div class="portrait-info">
+                        <span class="portrait-author">Leonor Varela</span>
+                        <h4 class="portrait-book-title"><i>Ir al cielo y volver</i></h4>
+                        <div class="portrait-role">
+                            <span class="lang-en">Directed by Jane Santos</span>
+                            <span class="lang-es">Dirigido por Jane Santos</span>
+                        </div>
+                        <a href="https://www.audible.com/pd/Ir-al-cielo-y-volver-Go-to-Heaven-and-Back-Audiobook/956605632X?eac_link=4ALRgdQxn4Lj&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=956605632X&qid=IIOTbUm0XJ&eac_id=141-2072986-1412118_IIOTbUm0XJ&sr=1-1" target="_blank" rel="noopener" class="portrait-audible-link">
+                            <span class="lang-en">Listen on Audible →</span>
+                            <span class="lang-es">Escuchar en Audible →</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
